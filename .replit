@@ -21,3 +21,14 @@ externalPort = 3000
 [[ports]]
 localPort = 5173
 externalPort = 80
+
+[workflows]
+
+[[workflows.workflow]]
+name = "Run Backend API"
+author = 43980068
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd backend/HotelServiceAPI && dotnet run"
