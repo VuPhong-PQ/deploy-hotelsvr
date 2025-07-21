@@ -24,6 +24,7 @@ builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IExcelService, ExcelService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>

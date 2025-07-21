@@ -1,5 +1,6 @@
 using HotelServiceAPI.Data;
 using HotelServiceAPI.Models;
+using HotelServiceAPI.Models.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelServiceAPI.Repositories
@@ -85,6 +86,38 @@ namespace HotelServiceAPI.Repositories
                 .Select(s => s.Category!)
                 .Distinct()
                 .OrderBy(c => c)
+                .ToListAsync();
+        }
+
+        // For admin - get all services including inactive ones
+        public async Task<IEnumerable<Service>> GetAllServicesAsync()
+        {
+            return await _context.Services
+                .Include(s => s.CreatedByUser)
+                .OrderByDescending(s => s.CreatedAt)
+                .ToListAsync();
+        }
+
+        // For Excel export with detailed information
+        public async Task<IEnumerable<ServiceExportDto>> GetAllServicesForExportAsync()
+        {
+            return await _context.Services
+                .Include(s => s.CreatedByUser)
+                .Select(s => new ServiceExportDto
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Description = s.Description,
+                    ImageUrl = s.ImageUrl,
+                    Icon = s.Icon,
+                    Price = s.Price,
+                    Category = s.Category,
+                    IsActive = s.IsActive,
+                    CreatedByName = s.CreatedByUser.FullName,
+                    CreatedAt = s.CreatedAt,
+                    UpdatedAt = s.UpdatedAt
+                })
+                .OrderByDescending(s => s.CreatedAt)
                 .ToListAsync();
         }
     }

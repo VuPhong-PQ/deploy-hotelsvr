@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "RR8elQuMQOLKpBM/LrhekAsxLveKajWg7ylEM1r1e9E=",
+  "Hash": "pJfYWSR7FY5QNAx60NHJCLZ2lG3JQlCUWrfrzCk6FY8=",
   "Source": "HotelServiceAPI",
   "BasePath": "_content/HotelServiceAPI",
   "Mode": "Default",
@@ -57,6 +57,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\images\\042f67a0-4d2f-44a7-887d-7c9d8fa44263.jpg"
+    },
+    {
+      "Identity": "D:\\laptrinh\\DoAnFull\\HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\11305cc4-3b7b-44da-9bb4-53263b15e92f.jpg",
+      "SourceId": "HotelServiceAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\laptrinh\\DoAnFull\\HotelServices\\backend\\HotelServiceAPI\\wwwroot\\",
+      "BasePath": "_content/HotelServiceAPI",
+      "RelativePath": "uploads/images/11305cc4-3b7b-44da-9bb4-53263b15e92f#[.{fingerprint}]?.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "dzuk0ne4nx",
+      "Integrity": "J4rVe9E1EmuHL+xYnnrIiaOuiT7ixLHU2aXbQRSd3fM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\images\\11305cc4-3b7b-44da-9bb4-53263b15e92f.jpg"
     },
     {
       "Identity": "D:\\laptrinh\\DoAnFull\\HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\122d3b7a-9207-4018-bbc3-f2548f4d1416.jpg",
@@ -557,6 +578,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-QgLJYd5oNda4b87GDhSEWLIlgd2nWT0eFmS9KgcPV2U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/images/11305cc4-3b7b-44da-9bb4-53263b15e92f.dzuk0ne4nx.jpg",
+      "AssetFile": "D:\\laptrinh\\DoAnFull\\HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\11305cc4-3b7b-44da-9bb4-53263b15e92f.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "207471"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"J4rVe9E1EmuHL+xYnnrIiaOuiT7ixLHU2aXbQRSd3fM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 21 Jul 2025 13:25:23 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "dzuk0ne4nx"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/images/11305cc4-3b7b-44da-9bb4-53263b15e92f.jpg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-J4rVe9E1EmuHL+xYnnrIiaOuiT7ixLHU2aXbQRSd3fM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/images/11305cc4-3b7b-44da-9bb4-53263b15e92f.jpg",
+      "AssetFile": "D:\\laptrinh\\DoAnFull\\HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\11305cc4-3b7b-44da-9bb4-53263b15e92f.jpg",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "207471"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/jpeg"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"J4rVe9E1EmuHL+xYnnrIiaOuiT7ixLHU2aXbQRSd3fM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 21 Jul 2025 13:25:23 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-J4rVe9E1EmuHL+xYnnrIiaOuiT7ixLHU2aXbQRSd3fM="
         }
       ]
     },

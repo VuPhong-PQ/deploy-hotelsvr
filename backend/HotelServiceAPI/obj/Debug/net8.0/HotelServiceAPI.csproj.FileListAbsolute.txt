@@ -284,3 +284,12 @@ D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\obj\Debug\net8.0\refi
 D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\obj\Debug\net8.0\HotelServiceAPI.pdb
 D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\obj\Debug\net8.0\HotelServiceAPI.genruntimeconfig.cache
 D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\obj\Debug\net8.0\ref\HotelServiceAPI.dll
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\obj\Debug\net8.0\HotelServiceAPI.sourcelink.json
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\bin\Debug\net8.0\EPPlus.dll
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\bin\Debug\net8.0\EPPlus.Interfaces.dll
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\bin\Debug\net8.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Json.dll
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\bin\Debug\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+D:\laptrinh\DoAnFull\HotelServices\backend\HotelServiceAPI\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
