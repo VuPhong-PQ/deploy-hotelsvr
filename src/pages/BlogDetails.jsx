@@ -141,7 +141,7 @@ const BlogDetails = () => {
           <Row>
             <Col lg="8" md="8">
               <div className="blog__details">
-                {blog.imageUrl && !blog.imageUrl.includes('via.placeholder.com') ? (
+                {blog.imageUrl && !blog.imageUrl.includes('via.placeholder.com') && (
                   <img 
                     src={blog.imageUrl} 
                     alt={blog.title} 
@@ -149,32 +149,14 @@ const BlogDetails = () => {
                     style={{ borderRadius: '8px', marginBottom: '20px' }}
                     onError={(e) => {
                       e.target.style.display = 'none';
-                      e.target.nextElementSibling.style.display = 'flex';
                     }}
                   />
-                ) : null}
-                <div 
-                  className="placeholder-image d-flex align-items-center justify-content-center bg-primary text-white"
-                  style={{
-                    width: '100%',
-                    height: '400px',
-                    fontSize: '24px',
-                    fontWeight: 'bold',
-                    display: (!blog.imageUrl || blog.imageUrl.includes('via.placeholder.com')) ? 'flex' : 'none',
-                    borderRadius: '8px',
-                    marginBottom: '20px'
-                  }}
-                >
-                  <div className="text-center">
-                    <i className="ri-image-line" style={{ fontSize: '48px', marginBottom: '10px', display: 'block' }}></i>
-                    Hình ảnh Blog
-                  </div>
-                </div>
+                )}
                 <h2 className="section__title mt-4">{blog.title}</h2>
 
                 <div className="blog__publisher d-flex align-items-center gap-4 mb-4">
                   <span className="blog__author">
-                    <i className="ri-user-line"></i> {blog.authorName || 'Tác giả'}
+                    <i className="ri-user-line"></i> {blog.author?.name || blog.authorName || 'Tác giả'}
                   </span>
 
                   <span className=" d-flex align-items-center gap-1 section__description">
@@ -210,7 +192,7 @@ const BlogDetails = () => {
                     </div>
                     <div className="stats__item d-flex justify-content-between mb-2">
                       <span><i className="ri-user-line"></i> Author:</span>
-                      <span>{blog.authorName || 'Unknown'}</span>
+                      <span>{blog.author?.name || blog.authorName || 'Unknown'}</span>
                     </div>
                     <div className="stats__item d-flex justify-content-between">
                       <span><i className="ri-time-line"></i> Reading time:</span>
