@@ -34,7 +34,6 @@ const Header = () => {
   const { userCurrent, logout } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStatus, setModalStatus] = useState('login');
-  const navigate = useNavigate();
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
 
@@ -192,6 +191,29 @@ const Header = () => {
                         >
                           My Posts
                         </NavLink>
+                        {userCurrent.role === 'Admin' && (
+                          <NavLink
+                            to="/admin"
+                            className="nav__item admin__link"
+                            style={{
+                              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                              color: 'white',
+                              padding: '8px 16px',
+                              borderRadius: '25px',
+                              fontWeight: '600',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.5px',
+                              border: '2px solid transparent',
+                              transition: 'all 0.3s ease',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px'
+                            }}
+                          >
+                            <i className="ri-admin-line"></i>
+                            Admin
+                          </NavLink>
+                        )}
                       </>
                     )}
               </div>

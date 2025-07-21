@@ -17,7 +17,7 @@ const ModalAuthentication = ({ open, handleCloseModal, status }) => {
   const handleLogin = async (values) => {
     try {
       const response = await loginMutation.mutateAsync(values);
-      login(response.user);
+      login(response.user, response.token);
       message.success(response.message || 'Đăng nhập thành công!');
       loginForm.resetFields();
       handleCloseModal();

@@ -10,8 +10,8 @@ export const API_ENDPOINTS = {
     create: `${API_BASE_URL}/users`,
     update: (id) => `${API_BASE_URL}/users/${id}`,
     delete: (id) => `${API_BASE_URL}/users/${id}`,
-    register: `${API_BASE_URL}/users`,
-    login: `${API_BASE_URL}/users`,
+    register: `${API_BASE_URL}/users/register`,
+    login: `${API_BASE_URL}/users/login`,
   },
   services: {
     getAll: `${API_BASE_URL}/services`,

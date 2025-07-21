@@ -12,6 +12,7 @@ import ReservationConfirmation from "../pages/ReservationConfirmation";
 import CreateBlog from "../pages/CreateBlog";
 import EditBlog from "../pages/EditBlog";
 import MyBlogs from "../pages/MyBlogs";
+import AdminDashboard from "../components/Admin/AdminDashboard";
 
 const Routers = () => {
   return (
@@ -28,6 +29,7 @@ const Routers = () => {
       <Route path="/create-blog" element={<CreateBlog />} />
       <Route path="/edit-blog/:id" element={<EditBlog />} />
       <Route path="/my-blogs" element={<MyBlogs />} />
+      <Route path="/admin" element={<AdminDashboard />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

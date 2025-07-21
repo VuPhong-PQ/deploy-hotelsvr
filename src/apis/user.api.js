@@ -10,7 +10,8 @@ let mockUsers = [
     lastName: 'User',
     email: 'admin@hotel.com',
     password: '123456',
-    phone: '0123456789'
+    phone: '0123456789',
+    role: 'Admin'
   }
 ];
 

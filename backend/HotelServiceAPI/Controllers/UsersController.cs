@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using HotelServiceAPI.Models;
 using HotelServiceAPI.Repositories;
+using HotelServiceAPI.Services;
 using System.ComponentModel.DataAnnotations;
 
 namespace HotelServiceAPI.Controllers
@@ -11,10 +12,12 @@ namespace HotelServiceAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IAuthService _authService;
 
-        public UsersController(IUserRepository userRepository)
+        public UsersController(IUserRepository userRepository, IAuthService authService)
         {
             _userRepository = userRepository;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -86,10 +89,23 @@ namespace HotelServiceAPI.Controllers
                 return Unauthorized(new { message = "Email hoặc mật khẩu không đúng" });
             }
 
+            // Generate JWT token
+            var token = await _authService.GenerateJwtTokenAsync(user);
+
             return Ok(new
             {
                 message = "Đăng nhập thành công",
-                user = user
+                user = new
+                {
+                    user.Id,
+                    user.FirstName,
+                    user.LastName,
+                    FullName = user.FullName,
+                    user.Email,
+                    user.Phone,
+                    user.Role
+                },
+                token = token
             });
         }
 

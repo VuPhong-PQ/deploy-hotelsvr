@@ -56,7 +56,8 @@ namespace HotelServiceAPI.Controllers
                     u.Email, 
                     u.FirstName, 
                     u.LastName, 
-                    u.Role 
+                    u.Role,
+                    PasswordHash = u.Password // For debugging only
                 }));
             }
             catch (Exception ex)
@@ -64,5 +65,64 @@ namespace HotelServiceAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
+
+        [HttpPost("make-admin/{email}")]
+        public async Task<IActionResult> MakeUserAdmin(string email)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+                if (user == null)
+                {
+                    return NotFound(new { message = $"User với email {email} không tồn tại" });
+                }
+
+                user.Role = "Admin";
+                await _context.SaveChangesAsync();
+
+                return Ok(new 
+                { 
+                    message = $"Đã cập nhật user {user.FirstName} {user.LastName} ({email}) thành Admin",
+                    user = new { user.Id, user.Email, user.FirstName, user.LastName, user.Role }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+                if (user == null)
+                {
+                    return NotFound(new { message = $"User với email {request.Email} không tồn tại" });
+                }
+
+                // Hash password using BCrypt (same as UserRepository)
+                user.Password = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+                await _context.SaveChangesAsync();
+
+                return Ok(new 
+                { 
+                    message = $"Đã cập nhật mật khẩu cho user {user.FirstName} {user.LastName} ({request.Email})",
+                    user = new { user.Id, user.Email, user.FirstName, user.LastName, user.Role }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+    }
+
+    public class ChangePasswordRequest
+    {
+        public string Email { get; set; } = string.Empty;
+        public string NewPassword { get; set; } = string.Empty;
     }
 }
