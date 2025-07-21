@@ -79,3 +79,55 @@ blockquote {
     line-height: 1.4rem;
   }
 }
+
+/* Enhanced styles for links and images in blog content */
+.blog__content a {
+  color: #007bff !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.blog__content a:hover {
+  color: #0056b3 !important;
+  border-bottom: 1px solid #007bff;
+}
+
+.blog__content img {
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 15px 0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+  display: block !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog__content img:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2) !important;
+}
+
+.blog__content {
+  line-height: 1.8;
+  word-wrap: break-word;
+}
+
+/* Link icon styling */
+.blog__content a:before {
+  content: "🔗";
+  margin-right: 5px;
+  font-size: 0.9em;
+}
+
+/* Image caption styling */
+.blog__content img + em {
+  display: block;
+  text-align: center;
+  font-style: italic;
+  color: #666;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  font-size: 0.9em;
+}

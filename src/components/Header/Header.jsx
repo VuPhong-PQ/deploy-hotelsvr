@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { Container, Row, Col } from "reactstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import ModalAuthentication from "../ModalAuthentication";
 import "../../styles/header.css";
 
 const navLinks = [
@@ -29,8 +31,25 @@ const navLinks = [
 
 const Header = () => {
   const menuRef = useRef(null);
+  const { userCurrent, logout } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalStatus, setModalStatus] = useState('login');
+  const navigate = useNavigate();
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
+
+  const handleOpenModal = (status) => {
+    setModalStatus(status);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
     <header className="header">
@@ -46,9 +65,36 @@ const Header = () => {
                 </span>
               </div>
             </Col>
-            <Col lg='6'>
+            <Col lg="6" md="6" sm="6">
+              <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
+                {!userCurrent ? (
+                  <>
+                    <button 
+                      className="header__login-btn"
+                      onClick={() => handleOpenModal('login')}
+                    >
+                      <i className="ri-login-circle-line"></i> Login
+                    </button>
+                    <button 
+                      className="header__register-btn"
+                      onClick={() => handleOpenModal('register')}
+                    >
+                      <i className="ri-user-add-line"></i> Register
+                    </button>
+                  </>
+                ) : (
+                  <div className="header__user-info d-flex align-items-center gap-2">
+                    <span>Welcome, {userCurrent.firstName} {userCurrent.lastName}</span>
+                    <button 
+                      className="header__logout-btn"
+                      onClick={handleLogout}
+                    >
+                      <i className="ri-logout-circle-line"></i> Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             </Col>
-            {/* gán nút đăng nhâp cũ tại đây */}
           </Row>
         </Container>
       </div>
@@ -132,6 +178,22 @@ const Header = () => {
                     {item.display}
                   </NavLink>
                 ))}
+                {userCurrent && (
+                      <>
+                        <NavLink
+                          to="/create-blog"
+                          className="nav__item"
+                        >
+                          Create Post
+                        </NavLink>
+                        <NavLink
+                          to="/my-blogs"
+                          className="nav__item"
+                        >
+                          My Posts
+                        </NavLink>
+                      </>
+                    )}
               </div>
             </div>
 
@@ -146,6 +208,12 @@ const Header = () => {
           </div>
         </Container>
       </div>
+
+      <ModalAuthentication 
+        open={isModalOpen}
+        handleCloseModal={handleCloseModal}
+        status={modalStatus}
+      />
     </header>
   );
 };

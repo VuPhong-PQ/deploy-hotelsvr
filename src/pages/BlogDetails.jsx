@@ -1,22 +1,138 @@
-import React, { useEffect } from "react";
-import { Container, Row, Col, Form, FormGroup, Input } from "reactstrap";
-
+import React, { useEffect, useCallback } from "react";
+import { Container, Row, Col, Alert } from "reactstrap";
 import { useParams } from "react-router-dom";
-import blogData from "../assets/data/blogData.js";
+import { useGetBlogById } from "../apis/blog.api";
 import Helmet from "../components/Helmet/Helmet";
-import { Link } from "react-router-dom";
-
-import commentImg from "../assets/all-images/ava-1.jpg";
-
+import Comments from "../components/Comments/Comments";
 import "../styles/blog-details.css";
 
 const BlogDetails = () => {
-  const { slug } = useParams();
-  const blog = blogData.find((blog) => blog.title === slug);
+  const { id } = useParams();
+  const { data: blog, isLoading, error } = useGetBlogById(id);
+
+  // Memoize renderContent function
+  const renderContent = useCallback((content) => {
+    if (!content) return null;
+
+    // Split content by lines to handle each line separately
+    const lines = content.split('\n');
+    
+    return lines.map((line, index) => {
+      // Skip empty lines
+      if (!line.trim()) {
+        return <br key={index} />;
+      }
+
+      // Check if line contains URL pattern
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const imageRegex = /\.(jpg|jpeg|png|gif|bmp|webp)(\?[^\s]*)?$/i;
+      
+      // Find all URLs in the line
+      const urls = line.match(urlRegex);
+      
+      if (urls) {
+        let processedLine = line;
+        
+        urls.forEach(url => {
+          // BỎ QUA TẤT CẢ PLACEHOLDER URLs
+          if (url.includes('via.placeholder.com') || 
+              url.includes('placeholder') || 
+              url.includes('picsum.photos') ||
+              url.includes('lorempixel.com')) {
+            // Thay thế bằng placeholder text thay vì URL
+            processedLine = processedLine.replace(url, '[Hình ảnh demo đã bị loại bỏ]');
+            return;
+          }
+          
+          if (imageRegex.test(url)) {
+            // Replace image URLs with img tags
+            processedLine = processedLine.replace(url, 
+              `<div style="text-align: center; margin: 20px 0;">
+                <img src="${url}" alt="Hình ảnh đính kèm" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer;" onclick="window.open('${url}', '_blank')" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                <div style="display:none; padding: 20px; background: #f8f9fa; border-radius: 8px; text-align: center; color: #6c757d;">❌ Không thể tải ảnh</div>
+                <p style="font-style: italic; color: #666; margin-top: 8px; font-size: 0.9em;">Nhấn để xem ảnh gốc</p>
+              </div>`
+            );
+          } else {
+            // Replace regular URLs with clickable links
+            const domain = url.replace(/^https?:\/\//, '').split('/')[0];
+            processedLine = processedLine.replace(url, 
+              `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #007bff; text-decoration: none; font-weight: 500; border-bottom: 1px solid transparent; transition: all 0.3s ease;" onmouseover="this.style.borderBottom='1px solid #007bff'" onmouseout="this.style.borderBottom='1px solid transparent'">
+                🔗 ${domain}
+              </a>`
+            );
+          }
+        });
+
+        return (
+          <div 
+            key={index}
+            dangerouslySetInnerHTML={{ __html: processedLine }}
+            style={{ marginBottom: '12px', lineHeight: '1.8' }}
+          />
+        );
+      }
+
+      // Regular text line
+      return (
+        <p key={index} style={{ marginBottom: '12px', lineHeight: '1.8' }}>
+          {line}
+        </p>
+      );
+    });
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [blog]);
+
+  if (isLoading) {
+    return (
+      <section>
+        <Container>
+          <Row>
+            <Col lg="12" className="text-center py-5">
+              <div className="spinner-border" role="status">
+                <span className="sr-only">Đang tải...</span>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section>
+        <Container>
+          <Row>
+            <Col lg="12">
+              <Alert color="danger">
+                Có lỗi xảy ra khi tải blog: {error.message}
+              </Alert>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    );
+  }
+
+  if (!blog) {
+    return (
+      <section>
+        <Container>
+          <Row>
+            <Col lg="12">
+              <Alert color="warning">
+                Không tìm thấy blog
+              </Alert>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    );
+  }
 
   return (
     <Helmet title={blog.title}>
@@ -25,91 +141,132 @@ const BlogDetails = () => {
           <Row>
             <Col lg="8" md="8">
               <div className="blog__details">
-                <img src={blog.imgUrl} alt="" className="w-100" />
+                {blog.imageUrl && !blog.imageUrl.includes('via.placeholder.com') ? (
+                  <img 
+                    src={blog.imageUrl} 
+                    alt={blog.title} 
+                    className="w-100"
+                    style={{ borderRadius: '8px', marginBottom: '20px' }}
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <div 
+                  className="placeholder-image d-flex align-items-center justify-content-center bg-primary text-white"
+                  style={{
+                    width: '100%',
+                    height: '400px',
+                    fontSize: '24px',
+                    fontWeight: 'bold',
+                    display: (!blog.imageUrl || blog.imageUrl.includes('via.placeholder.com')) ? 'flex' : 'none',
+                    borderRadius: '8px',
+                    marginBottom: '20px'
+                  }}
+                >
+                  <div className="text-center">
+                    <i className="ri-image-line" style={{ fontSize: '48px', marginBottom: '10px', display: 'block' }}></i>
+                    Hình ảnh Blog
+                  </div>
+                </div>
                 <h2 className="section__title mt-4">{blog.title}</h2>
 
                 <div className="blog__publisher d-flex align-items-center gap-4 mb-4">
                   <span className="blog__author">
-                    <i class="ri-user-line"></i> {blog.author}
+                    <i className="ri-user-line"></i> {blog.authorName || 'Tác giả'}
                   </span>
 
                   <span className=" d-flex align-items-center gap-1 section__description">
-                    <i class="ri-calendar-line"></i> {blog.date}
-                  </span>
-
-                  <span className=" d-flex align-items-center gap-1 section__description">
-                    <i class="ri-time-line"></i> {blog.time}
+                    <i className="ri-calendar-line"></i> {new Date(blog.createdAt).toLocaleDateString('vi-VN')}
                   </span>
                 </div>
 
-                <p className="section__description">{blog.description}</p>
-                <h6 className="ps-5 fw-normal">
-                  <blockquote className="fs-4">{blog.quote}</blockquote>
-                </h6>
-                <p className="section__description">{blog.description}</p>
+                <div className="blog__content section__description">
+                  {renderContent(blog.content)}
+                </div>
+                
+                {blog.quote && (
+                  <h6 className="ps-5 fw-normal">
+                    <blockquote className="fs-4">{blog.quote}</blockquote>
+                  </h6>
+                )}
               </div>
 
-              <div className="comment__list mt-5">
-                <h4 className="mb-5">3 Comments</h4>
-
-                <div className="single__comment d-flex gap-3">
-                  <img src={commentImg} alt="" />
-                  <div className="comment__content">
-                    <h6 className=" fw-bold">David Visa</h6>
-                    <p className="section__description mb-0">14 July, 2022</p>
-                    <p className="section__description">
-                    The company itself is a very successful company.                      So the little distinction that he wants at the time!
-                    </p>
-
-                    <span className="replay d-flex align-items-center gap-1">
-                      <i class="ri-reply-line"></i> Replay
-                    </span>
-                  </div>
-                </div>
-
-                {/* =============== comment form ============ */}
-                <div className="leave__comment-form mt-5">
-                  <h4>Leave a Comment</h4>
-                  <p className="section__description">
-                    You must sign-in to make or comment a post
-                  </p>
-
-                  <Form>
-                    <FormGroup className=" d-flex gap-3">
-                      <Input type="text" placeholder="Full name" />
-                      <Input type="email" placeholder="Email" />
-                    </FormGroup>
-
-                    <FormGroup>
-                      <textarea
-                        rows="5"
-                        className="w-100 py-2 px-3"
-                        placeholder="Comment..."
-                      ></textarea>
-                    </FormGroup>
-
-                    <button className="btn comment__btn mt-3">
-                      Post a Comment
-                    </button>
-                  </Form>
-                </div>
-              </div>
+              {/* =============== Comments Section ============ */}
+              <Comments blogId={id} />
             </Col>
 
+            {/* ========== SIDEBAR - Điều chỉnh cho cân đối ========== */}
             <Col lg="4" md="4">
-              <div className="recent__post mb-4">
-                <h5 className=" fw-bold">Recent Posts</h5>
-              </div>
-              {blogData.map((item) => (
-                <div className="recent__blog-post mb-4" key={item.id}>
-                  <div className="recent__blog-item d-flex gap-3">
-                    <img src={item.imgUrl} alt="" className="w-25 rounded-2" />
-                    <h6>
-                      <Link to={`/blogs/${item.title}`}>{blog.title}</Link>
-                    </h6>
+              <div className="sidebar">
+                {/* Blog Stats */}
+                <div className="blog__stats mb-4">
+                  <div className="stats__card p-3 bg-light rounded">
+                    <h6 className="fw-bold text-center mb-3">Blog Information</h6>
+                    <div className="stats__item d-flex justify-content-between mb-2">
+                      <span><i className="ri-calendar-line"></i> Published:</span>
+                      <span>{new Date(blog.createdAt).toLocaleDateString('en-US')}</span>
+                    </div>
+                    <div className="stats__item d-flex justify-content-between mb-2">
+                      <span><i className="ri-user-line"></i> Author:</span>
+                      <span>{blog.authorName || 'Unknown'}</span>
+                    </div>
+                    <div className="stats__item d-flex justify-content-between">
+                      <span><i className="ri-time-line"></i> Reading time:</span>
+                      <span>{Math.ceil((blog.content?.length || 0) / 200)} min</span>
+                    </div>
                   </div>
                 </div>
-              ))}
+
+                {/* Share Section */}
+                <div className="blog__share mb-4">
+                  <div className="share__card p-3 bg-light rounded">
+                    <h6 className="fw-bold text-center mb-3">Share this post</h6>
+                    <div className="share__buttons d-flex justify-content-center gap-2">
+                      <button 
+                        className="btn btn-primary btn-sm"
+                        onClick={() => {
+                          const url = window.location.href;
+                          const text = `Check out: ${blog.title}`;
+                          if (navigator.share) {
+                            navigator.share({ title: blog.title, text, url });
+                          } else {
+                            navigator.clipboard.writeText(`${text} - ${url}`);
+                            alert('Link copied to clipboard!');
+                          }
+                        }}
+                      >
+                        <i className="ri-share-line"></i> Share
+                      </button>
+                      <button 
+                        className="btn btn-outline-primary btn-sm"
+                        onClick={() => {
+                          navigator.clipboard.writeText(window.location.href);
+                          alert('Link copied!');
+                        }}
+                      >
+                        <i className="ri-file-copy-line"></i> Copy
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Back to Blogs */}
+                <div className="blog__navigation">
+                  <div className="navigation__card p-3 bg-light rounded">
+                    <button 
+                      className="btn btn-outline-secondary w-100"
+                      onClick={() => window.history.back()}
+                    >
+                      <i className="ri-arrow-left-line"></i> Back to Previous Page
+                    </button>
+                  </div>
+                </div>
+
+                {/* Sticky spacer để đẩy content xuống */}
+                <div className="sidebar__spacer" style={{ height: '100px' }}></div>
+              </div>
             </Col>
           </Row>
         </Container>

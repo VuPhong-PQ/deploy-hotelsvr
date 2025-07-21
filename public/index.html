@@ -25,6 +25,75 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <script>
+      // Block tất cả requests đến via.placeholder.com
+      (function() {
+        // Block fetch requests
+        if (typeof window !== 'undefined') {
+          const originalFetch = window.fetch;
+          window.fetch = function(...args) {
+            if (args[0] && (args[0].includes('via.placeholder.com') || args[0].includes('placeholder'))) {
+              console.warn('Blocked placeholder request:', args[0]);
+              return Promise.reject(new Error('Blocked placeholder request'));
+            }
+            return originalFetch.apply(this, args);
+          };
+
+          // Block XMLHttpRequest
+          const originalXHROpen = XMLHttpRequest.prototype.open;
+          XMLHttpRequest.prototype.open = function(method, url, ...args) {
+            if (url && (url.includes('via.placeholder.com') || url.includes('placeholder'))) {
+              console.warn('Blocked XHR placeholder request:', url);
+              throw new Error('Blocked placeholder request');
+            }
+            return originalXHROpen.call(this, method, url, ...args);
+          };
+
+          // Block image loading từ placeholder domains
+          const originalCreateElement = document.createElement;
+          document.createElement = function(tagName) {
+            const element = originalCreateElement.call(this, tagName);
+            
+            if (tagName.toLowerCase() === 'img') {
+              const originalSetAttribute = element.setAttribute;
+              element.setAttribute = function(name, value) {
+                if (name === 'src' && value && (value.includes('via.placeholder.com') || value.includes('placeholder'))) {
+                  console.warn('Blocked img placeholder src:', value);
+                  return; // Không set src
+                }
+                return originalSetAttribute.call(this, name, value);
+              };
+
+              // Override src property
+              Object.defineProperty(element, 'src', {
+                set: function(value) {
+                  if (value && (value.includes('via.placeholder.com') || value.includes('placeholder'))) {
+                    console.warn('Blocked img placeholder src property:', value);
+                    return;
+                  }
+                  this.setAttribute('src', value);
+                },
+                get: function() {
+                  return this.getAttribute('src');
+                }
+              });
+            }
+            
+            return element;
+          };
+
+          // Block background images trong CSS
+          const originalSetProperty = CSSStyleDeclaration.prototype.setProperty;
+          CSSStyleDeclaration.prototype.setProperty = function(property, value, priority) {
+            if (property === 'background-image' && value && (value.includes('via.placeholder.com') || value.includes('placeholder'))) {
+              console.warn('Blocked CSS background placeholder:', value);
+              return;
+            }
+            return originalSetProperty.call(this, property, value, priority);
+          };
+        }
+      })();
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

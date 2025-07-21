@@ -1,15 +1,15 @@
-
-using Microsoft.EntityFrameworkCore;
 using HotelServiceAPI.Data;
 using HotelServiceAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using BCrypt.Net;
 
 namespace HotelServiceAPI.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly HotelDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public UserRepository(HotelDbContext context)
+        public UserRepository(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -17,33 +17,46 @@ namespace HotelServiceAPI.Repositories
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users
-                .Include(u => u.Bookings)
+                .Include(u => u.Blogs)
+                .Include(u => u.Comments)
+                .Include(u => u.CreatedServices)
                 .ToListAsync();
         }
 
         public async Task<User?> GetUserByIdAsync(int id)
         {
             return await _context.Users
-                .Include(u => u.Bookings)
+                .Include(u => u.Blogs)
+                .Include(u => u.Comments)
+                .Include(u => u.CreatedServices)
                 .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<User?> GetByIdAsync(int id)
+        {
+            return await GetUserByIdAsync(id);
         }
 
         public async Task<User?> GetUserByEmailAsync(string email)
         {
-            return await _context.Users
-                .FirstOrDefaultAsync(u => u.Email == email);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<User> CreateUserAsync(User user)
         {
+            // Hash password before saving
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+            user.CreatedAt = DateTime.UtcNow;
+            
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+            
             return user;
         }
 
         public async Task<User> UpdateUserAsync(User user)
         {
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Users.Update(user);
             await _context.SaveChangesAsync();
             return user;
         }
@@ -62,6 +75,16 @@ namespace HotelServiceAPI.Repositories
         public async Task<bool> UserExistsAsync(string email)
         {
             return await _context.Users.AnyAsync(u => u.Email == email);
+        }
+
+        public async Task<User?> ValidateUserAsync(string email, string password)
+        {
+            var user = await GetUserByEmailAsync(email);
+            if (user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                return user;
+            }
+            return null;
         }
     }
 }

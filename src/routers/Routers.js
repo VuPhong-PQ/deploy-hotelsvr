@@ -8,7 +8,10 @@ import Blog from "../pages/Blog";
 import BlogDetails from "../pages/BlogDetails";
 import NotFound from "../pages/NotFound";
 import Contact from "../pages/Contact";
-import ReservationConfirmation from "../pages/ReservationConfirmation"; // Import trang xác nhận
+import ReservationConfirmation from "../pages/ReservationConfirmation";
+import CreateBlog from "../pages/CreateBlog";
+import EditBlog from "../pages/EditBlog";
+import MyBlogs from "../pages/MyBlogs";
 
 const Routers = () => {
   return (
@@ -19,9 +22,12 @@ const Routers = () => {
       <Route path="/services" element={<Listing />} />
       <Route path="/services/:slug" element={<Details />} />
       <Route path="/blogs" element={<Blog />} />
-      <Route path="/blogs/:slug" element={<BlogDetails />} />
+      <Route path="/blogs/:id" element={<BlogDetails />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/reserve" element={<ReservationConfirmation />} /> {/* Thêm route cho trang xác nhận */}
+      <Route path="/reservation-confirmation" element={<ReservationConfirmation />} />
+      <Route path="/create-blog" element={<CreateBlog />} />
+      <Route path="/edit-blog/:id" element={<EditBlog />} />
+      <Route path="/my-blogs" element={<MyBlogs />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

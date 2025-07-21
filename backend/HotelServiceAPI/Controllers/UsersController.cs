@@ -1,7 +1,8 @@
-
+﻿
 using Microsoft.AspNetCore.Mvc;
 using HotelServiceAPI.Models;
 using HotelServiceAPI.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace HotelServiceAPI.Controllers
 {
@@ -34,16 +35,62 @@ namespace HotelServiceAPI.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        [HttpPost("register")]
+        public async Task<ActionResult<User>> Register([FromBody] RegisterRequest request)
         {
-            if (await _userRepository.UserExistsAsync(user.Email))
+            if (!ModelState.IsValid)
             {
-                return BadRequest("User with this email already exists");
+                return BadRequest(ModelState);
             }
 
-            var createdUser = await _userRepository.CreateUserAsync(user);
-            return CreatedAtAction(nameof(GetUser), new { id = createdUser.Id }, createdUser);
+            if (await _userRepository.UserExistsAsync(request.Email))
+            {
+                return BadRequest(new { message = "Email đã được sử dụng" });
+            }
+
+            var user = new User
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Password = request.Password,
+                Phone = request.Phone
+            };
+
+            try
+            {
+                var createdUser = await _userRepository.CreateUserAsync(user);
+                return Ok(new
+                {
+                    message = "Đăng ký thành công",
+                    user = createdUser
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi server: " + ex.Message });
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<User>> Login([FromBody] LoginRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userRepository.ValidateUserAsync(request.Email, request.Password);
+            if (user == null)
+            {
+                return Unauthorized(new { message = "Email hoặc mật khẩu không đúng" });
+            }
+
+            return Ok(new
+            {
+                message = "Đăng nhập thành công",
+                user = user
+            });
         }
 
         [HttpPut("{id}")]
@@ -74,23 +121,34 @@ namespace HotelServiceAPI.Controllers
             }
             return NoContent();
         }
+    }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<User>> Login([FromBody] LoginRequest loginRequest)
-        {
-            var user = await _userRepository.GetUserByEmailAsync(loginRequest.Email);
-            if (user == null || user.Password != loginRequest.Password)
-            {
-                return Unauthorized("Invalid email or password");
-            }
+    public class RegisterRequest
+    {
+        [Required(ErrorMessage = "Tên là bắt buộc")]
+        public string FirstName { get; set; } = string.Empty;
 
-            return Ok(user);
-        }
+        [Required(ErrorMessage = "Họ là bắt buộc")]
+        public string LastName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Email là bắt buộc")]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
+        [MinLength(6, ErrorMessage = "Mật khẩu phải có ít nhất 6 ký tự")]
+        public string Password { get; set; } = string.Empty;
+
+        public string? Phone { get; set; }
     }
 
     public class LoginRequest
     {
+        [Required(ErrorMessage = "Email là bắt buộc")]
+        [EmailAddress(ErrorMessage = "Email không hợp lệ")]
         public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Mật khẩu là bắt buộc")]
         public string Password { get; set; } = string.Empty;
     }
 }

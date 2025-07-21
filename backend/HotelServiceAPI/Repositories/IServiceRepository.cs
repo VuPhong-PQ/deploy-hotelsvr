@@ -1,14 +1,16 @@
-
 using HotelServiceAPI.Models;
 
 namespace HotelServiceAPI.Repositories
 {
     public interface IServiceRepository
     {
-        Task<IEnumerable<Service>> GetAllServicesAsync();
-        Task<Service?> GetServiceByIdAsync(int id);
-        Task<Service> CreateServiceAsync(Service service);
-        Task<Service> UpdateServiceAsync(Service service);
-        Task<bool> DeleteServiceAsync(int id);
+        Task<IEnumerable<Service>> GetAllAsync();
+        Task<IEnumerable<Service>> GetActiveServicesAsync();
+        Task<IEnumerable<Service>> GetServicesByCategoryAsync(string category);
+        Task<Service?> GetByIdAsync(int id);
+        Task<Service> CreateAsync(Service service);
+        Task<Service> UpdateAsync(Service service);
+        Task DeleteAsync(int id);
+        Task<IEnumerable<string>> GetCategoriesAsync();
     }
 }

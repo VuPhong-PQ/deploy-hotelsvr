@@ -1,37 +1,40 @@
-
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HotelServiceAPI.Models
 {
-    public class Service
+    public class Service  // ĐỔI TỪ HotelService THÀNH Service
     {
         public int Id { get; set; }
         
         [Required]
-        public string ServiceName { get; set; } = string.Empty;
+        [StringLength(200)]
+        public string Name { get; set; } = string.Empty;
         
-        public string? Brand { get; set; }
+        [Required]
+        public string Description { get; set; } = string.Empty;
         
-        public string? Model { get; set; }
+        [StringLength(500)]
+        public string? ImageUrl { get; set; }
         
+        [StringLength(100)]
+        public string? Icon { get; set; }
+        
+        [Required]
+        [Range(0, double.MaxValue)]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         
-        public int Rating { get; set; }
+        [StringLength(50)]
+        public string? Category { get; set; }
         
-        public string? Speed { get; set; }
-        
-        public string? GPS { get; set; }
-        
-        public string? SeatType { get; set; }
-        
-        public string? Automatic { get; set; }
-        
-        public string? Description { get; set; }
-        
-        public string? ImgUrl { get; set; }
+        public bool IsActive { get; set; } = true;
         
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         
-        public List<Booking> Bookings { get; set; } = new List<Booking>();
+        // Navigation properties
+        public int CreatedBy { get; set; }
+        public virtual User CreatedByUser { get; set; } = null!;
     }
 }

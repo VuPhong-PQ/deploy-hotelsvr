@@ -1,54 +1,91 @@
-
-using Microsoft.EntityFrameworkCore;
 using HotelServiceAPI.Data;
 using HotelServiceAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelServiceAPI.Repositories
 {
     public class ServiceRepository : IServiceRepository
     {
-        private readonly HotelDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public ServiceRepository(HotelDbContext context)
+        public ServiceRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<Service>> GetAllServicesAsync()
-        {
-            return await _context.Services.ToListAsync();
-        }
-
-        public async Task<Service?> GetServiceByIdAsync(int id)
+        public async Task<IEnumerable<Service>> GetAllAsync()
         {
             return await _context.Services
-                .Include(s => s.Bookings)
+                .Include(s => s.CreatedByUser)
+                .OrderBy(s => s.Name)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Service>> GetActiveServicesAsync()
+        {
+            return await _context.Services
+                .Include(s => s.CreatedByUser)
+                .Where(s => s.IsActive)
+                .OrderBy(s => s.Name)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Service>> GetServicesByCategoryAsync(string category)
+        {
+            return await _context.Services
+                .Include(s => s.CreatedByUser)
+                .Where(s => s.IsActive && s.Category == category)
+                .OrderBy(s => s.Name)
+                .ToListAsync();
+        }
+
+        public async Task<Service?> GetByIdAsync(int id)
+        {
+            return await _context.Services
+                .Include(s => s.CreatedByUser)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-        public async Task<Service> CreateServiceAsync(Service service)
+        public async Task<Service> CreateAsync(Service service)
         {
+            service.CreatedAt = DateTime.UtcNow;
+            service.UpdatedAt = DateTime.UtcNow;
+            
             _context.Services.Add(service);
             await _context.SaveChangesAsync();
-            return service;
+            
+            // Return the service with related data
+            return await GetByIdAsync(service.Id) ?? service;
         }
 
-        public async Task<Service> UpdateServiceAsync(Service service)
+        public async Task<Service> UpdateAsync(Service service)
         {
-            _context.Entry(service).State = EntityState.Modified;
+            service.UpdatedAt = DateTime.UtcNow;
+            
+            _context.Services.Update(service);
             await _context.SaveChangesAsync();
-            return service;
+            
+            return await GetByIdAsync(service.Id) ?? service;
         }
 
-        public async Task<bool> DeleteServiceAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var service = await _context.Services.FindAsync(id);
-            if (service == null)
-                return false;
+            if (service != null)
+            {
+                _context.Services.Remove(service);
+                await _context.SaveChangesAsync();
+            }
+        }
 
-            _context.Services.Remove(service);
-            await _context.SaveChangesAsync();
-            return true;
+        public async Task<IEnumerable<string>> GetCategoriesAsync()
+        {
+            return await _context.Services
+                .Where(s => s.IsActive && !string.IsNullOrEmpty(s.Category))
+                .Select(s => s.Category!)
+                .Distinct()
+                .OrderBy(c => c)
+                .ToListAsync();
         }
     }
 }

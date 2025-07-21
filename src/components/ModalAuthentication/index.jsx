@@ -1,183 +1,188 @@
-import { Form, Input, Modal, notification } from 'antd';
-import { useFormik } from 'formik';
-import React, { useContext } from 'react';
-import * as yup from 'yup';
-import AuthContext from '../../contexts/AuthContext';
-import { useAddUser, useGetUsers } from '../../apis/user.api';
+import React, { useState } from 'react';
+import { Modal, Form, Input, Button, message, Tabs } from 'antd';
+import { useAuth } from '../../contexts/AuthContext';
+import { useLoginUser, useRegisterUser } from '../../apis/user.api';
 
-const FormRegister = ({ form }) => {
-	return (
-		<Form layout='vertical'>
-			<Form.Item label='Email:'>
-				<Input
-					placeholder='Nhập email...'
-					name='email'
-					value={form.values.email}
-					onChange={form.handleChange}
-				/>
-			</Form.Item>
-			<Form.Item label='Tên người dùng:'>
-				<Input
-					placeholder='Nhập tên người dùng...'
-					name='username'
-					value={form.values.username}
-					onChange={form.handleChange}
-				/>
-			</Form.Item>
-			<Form.Item label='Mật khẩu:'>
-				<Input
-					placeholder='Nhập mật khẩu...'
-					name='password'
-					value={form.values.password}
-					onChange={form.handleChange}
-				/>
-			</Form.Item>
-		</Form>
-	);
-};
+const { TabPane } = Tabs;
 
-const FormLogin = ({ form }) => {
-	return (
-		<Form layout='vertical'>
-			<Form.Item label='Email:'>
-				<Input
-					placeholder='Nhập email...'
-					name='email'
-					value={form.values.email}
-					onChange={form.handleChange}
-				/>
-			</Form.Item>
-			<Form.Item label='Mật khẩu:'>
-				<Input
-					placeholder='Nhập mật khẩu...'
-					name='password'
-					value={form.values.password}
-					onChange={form.handleChange}
-				/>
-			</Form.Item>
-		</Form>
-	);
-};
+const ModalAuthentication = ({ open, handleCloseModal, status }) => {
+  const [activeTab, setActiveTab] = useState(status);
+  const [loginForm] = Form.useForm();
+  const [registerForm] = Form.useForm();
+  const { login } = useAuth();
 
-const ModalAuthentication = ({ status, open, handleCloseModal }) => {
-	const [api, contextHolder] = notification.useNotification();
+  const loginMutation = useLoginUser();
+  const registerMutation = useRegisterUser();
 
-	const { onChangeUserCurrent } = useContext(AuthContext);
+  const handleLogin = async (values) => {
+    try {
+      const response = await loginMutation.mutateAsync(values);
+      login(response.user);
+      message.success(response.message || 'Đăng nhập thành công!');
+      loginForm.resetFields();
+      handleCloseModal();
+    } catch (error) {
+      message.error(error.message || 'Đăng nhập thất bại!');
+    }
+  };
 
-	const title =
-		status === 'register' ? 'Đăng ký tài khoản' : 'Đăng nhập tài khoản';
-	const okText = status === 'register' ? 'Đăng ký' : 'Đăng nhập';
+  const handleRegister = async (values) => {
+    try {
+      const response = await registerMutation.mutateAsync(values);
+      message.success(response.message || 'Đăng ký thành công!');
+      registerForm.resetFields();
+      setActiveTab('login');
+    } catch (error) {
+      message.error(error.message || 'Đăng ký thất bại!');
+    }
+  };
 
-	const { mutate: register } = useAddUser({
-		handleSuccess: () => {
-			api.success({
-				message: `Đăng ký thành công`,
-				placement: 'topRight',
-			});
-			formRegister.handleReset();
-		},
-		handleError: (error) => {
-			api.error({
-				message: `Đăng ký thất bại`,
-				description: error,
-				placement: 'topRight',
-			});
-		},
-	});
+  const handleCancel = () => {
+    loginForm.resetFields();
+    registerForm.resetFields();
+    handleCloseModal();
+  };
 
-	const { data: users } = useGetUsers();
+  React.useEffect(() => {
+    setActiveTab(status);
+  }, [status]);
 
-	const formRegister = useFormik({
-		initialValues: {
-			email: '',
-			username: '',
-			password: '',
-		},
-		// validationSchema: yup.object({
-		// 	email: yup.string().required('Email là bắt buộc'),
-		// 	username: yup
-		// 		.string()
-		// 		.required('Tên người dùng là bắt buộc')
-		// 		.min(2, 'Tên người dùng không hợp lệ'),
-		// 	password: yup
-		// 		.string()
-		// 		.required('Mật khẩu là bắt buộc')
-		// 		.min(6, 'Mật khẩu quá ngắn')
-		// 		.max(24, 'Mật khẩu quá dài'),
-		// }),
-		onSubmit: (values) => {
-			register(values);
-		},
-	});
+  return (
+    <Modal
+      title="Xác thực người dùng"
+      open={open}
+      onCancel={handleCancel}
+      footer={null}
+      width={500}
+    >
+      <Tabs 
+        activeKey={activeTab} 
+        onChange={setActiveTab}
+        centered
+      >
+        <TabPane tab="Đăng nhập" key="login">
+          <Form
+            form={loginForm}
+            layout="vertical"
+            onFinish={handleLogin}
+          >
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                { required: true, message: 'Vui lòng nhập email!' },
+                { type: 'email', message: 'Email không hợp lệ!' }
+              ]}
+            >
+              <Input placeholder="Nhập email của bạn" />
+            </Form.Item>
 
-	const formLogin = useFormik({
-		initialValues: {
-			email: '',
-			password: '',
-		},
-		// validationSchema: yup.object({
-		// 	email: yup.string().required('Email là bắt buộc'),
-		// 	password: yup
-		// 		.string()
-		// 		.required('Mật khẩu là bắt buộc')
-		// 		.min(6, 'Mật khẩu quá ngắn')
-		// 		.max(24, 'Mật khẩu quá dài'),
-		// }),
-		onSubmit: (values) => {
-			let isLoginSuccess = false;
-			for (let user of users) {
-				if (user.email === values.email && user.password === values.password) {
-					api.success({
-						message: `Đăng nhập thành công`,
-						placement: 'topRight',
-					});
+            <Form.Item
+              label="Mật khẩu"
+              name="password"
+              rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
+            >
+              <Input.Password placeholder="Nhập mật khẩu của bạn" />
+            </Form.Item>
 
-					onChangeUserCurrent(user);
-					handleCloseModal();
+            <Form.Item>
+              <Button 
+                type="primary" 
+                htmlType="submit" 
+                loading={loginMutation.isPending}
+                block
+              >
+                Đăng nhập
+              </Button>
+            </Form.Item>
+          </Form>
+        </TabPane>
 
-					localStorage.setItem('user', JSON.stringify(user));
+        <TabPane tab="Đăng ký" key="register">
+          <Form
+            form={registerForm}
+            layout="vertical"
+            onFinish={handleRegister}
+          >
+            <Form.Item
+              label="Tên"
+              name="firstName"
+              rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
+            >
+              <Input placeholder="Nhập tên của bạn" />
+            </Form.Item>
 
-					return;
-				}
-			}
+            <Form.Item
+              label="Họ"
+              name="lastName"
+              rules={[{ required: true, message: 'Vui lòng nhập họ!' }]}
+            >
+              <Input placeholder="Nhập họ của bạn" />
+            </Form.Item>
 
-			if (isLoginSuccess === false) {
-				api.error({
-					message: `Đăng nhập thất bại công`,
-					description: 'Vui lòng xem lại email hoặc mật khẩu',
-					placement: 'topRight',
-				});
-			}
-		},
-	});
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                { required: true, message: 'Vui lòng nhập email!' },
+                { type: 'email', message: 'Email không hợp lệ!' }
+              ]}
+            >
+              <Input placeholder="Nhập email của bạn" />
+            </Form.Item>
 
-	const handleSubmit = () => {
-		if (status === 'register') {
-			formRegister.handleSubmit();
-		} else {
-			formLogin.handleSubmit();
-		}
-	};
+            <Form.Item
+              label="Số điện thoại"
+              name="phone"
+            >
+              <Input placeholder="Nhập số điện thoại (tùy chọn)" />
+            </Form.Item>
 
-	return (
-		<Modal
-			title={title}
-			open={open}
-			okText={okText}
-			cancelText='Hủy'
-			onOk={handleSubmit}
-			onCancel={handleCloseModal}
-		>
-			{contextHolder}
-			<div className='form-authentication' style={{ marginTop: '12px' }}>
-				{status === 'register' ? (
-					<FormRegister form={formRegister} />
-				) : (
-					<FormLogin form={formLogin} />
-				)}
-			</div>
-		</Modal>
-	);
+            <Form.Item
+              label="Mật khẩu"
+              name="password"
+              rules={[
+                { required: true, message: 'Vui lòng nhập mật khẩu!' },
+                { min: 6, message: 'Mật khẩu phải có ít nhất 6 ký tự!' }
+              ]}
+            >
+              <Input.Password placeholder="Nhập mật khẩu của bạn" />
+            </Form.Item>
+
+            <Form.Item
+              label="Xác nhận mật khẩu"
+              name="confirmPassword"
+              dependencies={['password']}
+              rules={[
+                { required: true, message: 'Vui lòng xác nhận mật khẩu!' },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error('Mật khẩu xác nhận không khớp!'));
+                  },
+                }),
+              ]}
+            >
+              <Input.Password placeholder="Xác nhận mật khẩu" />
+            </Form.Item>
+
+            <Form.Item>
+              <Button 
+                type="primary" 
+                htmlType="submit" 
+                loading={registerMutation.isPending}
+                block
+              >
+                Đăng ký
+              </Button>
+            </Form.Item>
+          </Form>
+        </TabPane>
+      </Tabs>
+    </Modal>
+  );
 };
 
 export default ModalAuthentication;
