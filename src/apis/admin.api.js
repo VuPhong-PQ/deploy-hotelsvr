@@ -286,7 +286,7 @@ export const useUpdateUserRole = () => {
   
   const realResult = useMutation({
     mutationFn: async ({ userId, role }) => {
-      const response = await api.put(`/admin/users/${userId}/role`, { role });
+      const response = await api.put(`/admin/users/${userId}/role`, { Role: role });
       return response.data;
     },
     onSuccess: () => {

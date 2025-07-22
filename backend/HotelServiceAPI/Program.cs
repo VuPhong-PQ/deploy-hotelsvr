@@ -123,7 +123,7 @@ using (var scope = app.Services.CreateScope())
                 FirstName = "Admin",
                 LastName = "User",
                 Email = "admin@hotel.com",
-                Password = "hashedpassword123",
+                Password = BCrypt.Net.BCrypt.HashPassword("admin123"),
                 Role = "Admin",
                 CreatedAt = DateTime.UtcNow
             };
@@ -154,33 +154,36 @@ using (var scope = app.Services.CreateScope())
             };
             context.Blogs.Add(blog2);
 
-            var service = new Service
-            {
-                Name = "Room Cleaning",
-                Description = "Professional room cleaning service",
-                ImageUrl = "/images/cleaning.jpg",
-                Icon = "fa-broom",
-                Category = "Cleaning",
-                Price = 50.00m,
-                CreatedBy = user.Id,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
-            context.Services.Add(service);
+            // Skip Services seeding for now to avoid foreign key issues
+            // var service = new Service
+            // {
+            //     Name = "Room Cleaning",
+            //     Description = "Professional room cleaning service",
+            //     ImageUrl = "/images/cleaning.jpg",
+            //     Icon = "fa-broom",
+            //     Category = "Cleaning",
+            //     Price = 50.00m,
+            //     CreatedBy = user.Id,
+            //     IsActive = true,
+            //     CreatedAt = DateTime.UtcNow,
+            //     UpdatedAt = DateTime.UtcNow
+            // };
+            // context.Services.Add(service);
 
-            var service2 = new Service
-            {
-                Name = "Laundry Service",
-                Description = "Professional laundry and dry cleaning",
-                ImageUrl = "/images/laundry.jpg",
-                Icon = "fa-tshirt",
-                Category = "Laundry",
-                Price = 25.00m,
-                CreatedBy = user.Id,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
-            context.Services.Add(service2);
+            // var service2 = new Service
+            // {
+            //     Name = "Laundry Service",
+            //     Description = "Professional laundry and dry cleaning",
+            //     ImageUrl = "/images/laundry.jpg",
+            //     Icon = "fa-tshirt",
+            //     Category = "Laundry",
+            //     Price = 25.00m,
+            //     CreatedBy = user.Id,
+            //     IsActive = true,
+            //     CreatedAt = DateTime.UtcNow,
+            //     UpdatedAt = DateTime.UtcNow
+            // };
+            // context.Services.Add(service2);
 
             context.SaveChanges();
             Console.WriteLine("✅ Data seeded successfully!");
