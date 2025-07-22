@@ -13,7 +13,7 @@ namespace HotelServiceAPI.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Comment> Comments { get; set; } // THÊM DÒNG NÀY NếU CHƯA CÓ
+        // public DbSet<Comment> Comments { get; set; } // TEMPORARILY DISABLED
         public DbSet<Service> Services { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace HotelServiceAPI.Data
                 entity.Property(e => e.Role).IsRequired().HasMaxLength(20).HasDefaultValue("User");
             });
 
-            // Blog configuration
+            // Blog configuration - EXPLICIT
             modelBuilder.Entity<Blog>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -42,34 +42,35 @@ namespace HotelServiceAPI.Data
                 entity.Property(e => e.ImageUrl).HasMaxLength(500);
                 entity.Property(e => e.Quote).HasMaxLength(500);
                 
+                // Explicit AuthorId -> User relationship
                 entity.HasOne(b => b.Author)
                       .WithMany()
                       .HasForeignKey(b => b.AuthorId)
+                      .HasConstraintName("FK_Blogs_Users_AuthorId")
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
-            // Comment configuration - SỬA SECTION NÀY
-            modelBuilder.Entity<Comment>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Content).IsRequired().HasMaxLength(1000);
-                entity.Property(e => e.GuestName).HasMaxLength(100);
-                entity.Property(e => e.GuestEmail).HasMaxLength(100);
-                
-                entity.HasOne(c => c.Blog)
-                      .WithMany()
-                      .HasForeignKey(c => c.BlogId)
-                      .OnDelete(DeleteBehavior.Cascade);
-                      
-                // SỬA: UserId có thể null
-                entity.HasOne(c => c.User)
-                      .WithMany()
-                      .HasForeignKey(c => c.UserId)
-                      .OnDelete(DeleteBehavior.SetNull) // Thay đổi thành SetNull
-                      .IsRequired(false); // UserId không bắt buộc
-            });
+            // Comment configuration - COMPLETELY DISABLED
+            // modelBuilder.Entity<Comment>(entity =>
+            // {
+            //     entity.HasKey(e => e.Id);
+            //     entity.Property(e => e.Content).IsRequired().HasMaxLength(1000);
+            //     entity.Property(e => e.GuestName).HasMaxLength(100);
+            //     entity.Property(e => e.GuestEmail).HasMaxLength(100);
+            //     
+            //     // Explicit property configurations
+            //     entity.Property(e => e.BlogId).IsRequired();
+            //     entity.Property(e => e.UserId).IsRequired(false);
+            //     
+            //     // Blog relationship only
+            //     entity.HasOne(c => c.Blog)
+            //           .WithMany()
+            //           .HasForeignKey(c => c.BlogId)
+            //           .HasConstraintName("FK_Comments_Blogs_BlogId")
+            //           .OnDelete(DeleteBehavior.Cascade);
+            // });
 
-            // Service configuration
+            // Service configuration - EXPLICIT
             modelBuilder.Entity<Service>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -80,10 +81,12 @@ namespace HotelServiceAPI.Data
                 entity.Property(e => e.Category).IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Price).HasColumnType("decimal(18,2)");
                 
-                // Fix the foreign key property name
+                // Explicit CreatedBy -> User relationship  
+                entity.Property(e => e.CreatedBy).IsRequired();
                 entity.HasOne<User>()
                       .WithMany()
-                      .HasForeignKey(s => s.CreatedBy) // Make sure this matches your Service model property
+                      .HasForeignKey(s => s.CreatedBy)
+                      .HasConstraintName("FK_Services_Users_CreatedBy")
                       .OnDelete(DeleteBehavior.Restrict);
             });
         }

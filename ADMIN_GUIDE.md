@@ -62,9 +62,8 @@ Nhấn vào nút **Admin** để vào trang quản trị.
 Hệ thống đã có sẵn demo data:
 
 **Dịch vụ mẫu:**
-- Spa & Wellness Center ($150)
-- Fine Dining Restaurant ($80)  
-- Fitness & Gym ($50)
+- Hiện tại database không có dịch vụ nào
+- Bạn có thể thêm dịch vụ mới thông qua trang admin
 
 **User mẫu:**
 - Admin User (admin@hotel.com) - Admin

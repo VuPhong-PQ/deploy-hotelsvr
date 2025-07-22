@@ -35,6 +35,6 @@ namespace HotelServiceAPI.Models
         
         // Navigation properties
         public int CreatedBy { get; set; }
-        public virtual User CreatedByUser { get; set; } = null!;
+        // public virtual User CreatedByUser { get; set; } = null!; // Tạm thời comment
     }
 }

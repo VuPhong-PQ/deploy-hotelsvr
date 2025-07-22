@@ -19,12 +19,13 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
-builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+// builder.Services.AddScoped<ICommentRepository, CommentRepository>(); // TEMPORARILY DISABLED
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 
 // Services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IExcelService, ExcelService>();
+builder.Services.AddScoped<ISqlServerService, SqlServerService>();
 
 // JWT Authentication
 builder.Services.AddAuthentication(options =>

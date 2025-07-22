@@ -36,6 +36,6 @@ namespace HotelServiceAPI.Models
         // Navigation properties
         public virtual ICollection<Blog> Blogs { get; set; } = new List<Blog>();
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
-        public virtual ICollection<Service> CreatedServices { get; set; } = new List<Service>();
+        // public virtual ICollection<Service> CreatedServices { get; set; } = new List<Service>(); // Tạm thời comment
     }
 }

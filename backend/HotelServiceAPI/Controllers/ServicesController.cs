@@ -12,12 +12,12 @@ namespace HotelServiceAPI.Controllers
     [Route("api/[controller]")]
     public class ServicesController : ControllerBase
     {
-        private readonly IServiceRepository _serviceRepository;
+        private readonly ISqlServerService _sqlServerService;
         private readonly IExcelService _excelService;
 
-        public ServicesController(IServiceRepository serviceRepository, IExcelService excelService)
+        public ServicesController(ISqlServerService sqlServerService, IExcelService excelService)
         {
-            _serviceRepository = serviceRepository;
+            _sqlServerService = sqlServerService;
             _excelService = excelService;
         }
 
@@ -27,12 +27,12 @@ namespace HotelServiceAPI.Controllers
         {
             try
             {
-                var services = await _serviceRepository.GetActiveServicesAsync();
+                var services = await _sqlServerService.GetAllServicesAsync();
                 return Ok(services);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new { message = "Lỗi EF Core: " + ex.Message });
             }
         }
 
@@ -42,7 +42,7 @@ namespace HotelServiceAPI.Controllers
         {
             try
             {
-                var service = await _serviceRepository.GetByIdAsync(id);
+                var service = await _sqlServerService.GetServiceByIdAsync(id);
                 if (service == null)
                 {
                     return NotFound(new { message = "Service không tồn tại" });
@@ -51,7 +51,7 @@ namespace HotelServiceAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new { message = "Lỗi EF Core: " + ex.Message });
             }
         }
 
@@ -64,12 +64,12 @@ namespace HotelServiceAPI.Controllers
         {
             try
             {
-                var services = await _serviceRepository.GetAllServicesAsync();
+                var services = await _sqlServerService.GetAllServicesForAdminAsync();
                 return Ok(services);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new { message = "Lỗi EF Core: " + ex.Message });
             }
         }
 
@@ -85,6 +85,13 @@ namespace HotelServiceAPI.Controllers
                     return BadRequest(ModelState);
                 }
 
+                // Lấy user ID từ JWT token
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                if (!int.TryParse(userIdClaim, out int userId))
+                {
+                    return Unauthorized(new { message = "Invalid user token" });
+                }
+
                 var service = new Service
                 {
                     Name = request.Name,
@@ -94,17 +101,17 @@ namespace HotelServiceAPI.Controllers
                     Price = request.Price,
                     Category = request.Category,
                     IsActive = request.IsActive,
-                    CreatedBy = request.CreatedBy,
+                    CreatedBy = userId, // Sử dụng user ID từ token
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 };
 
-                var createdService = await _serviceRepository.CreateAsync(service);
+                var createdService = await _sqlServerService.CreateServiceAsync(service);
                 return CreatedAtAction(nameof(GetService), new { id = createdService.Id }, createdService);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new { message = "Lỗi EF Core: " + ex.Message });
             }
         }
 
@@ -120,27 +127,31 @@ namespace HotelServiceAPI.Controllers
                     return BadRequest(ModelState);
                 }
 
-                var existingService = await _serviceRepository.GetByIdAsync(id);
+                var existingService = await _sqlServerService.GetServiceByIdAsync(id);
                 if (existingService == null)
                 {
                     return NotFound(new { message = "Service không tồn tại" });
                 }
 
-                existingService.Name = request.Name;
-                existingService.Description = request.Description;
-                existingService.ImageUrl = request.ImageUrl;
-                existingService.Icon = request.Icon;
-                existingService.Price = request.Price;
-                existingService.Category = request.Category;
-                existingService.IsActive = request.IsActive;
-                existingService.UpdatedAt = DateTime.UtcNow;
+                // Tạo service object mới với dữ liệu cập nhật
+                var serviceToUpdate = new Service
+                {
+                    Name = request.Name,
+                    Description = request.Description,
+                    ImageUrl = request.ImageUrl,
+                    Icon = request.Icon,
+                    Price = request.Price,
+                    Category = request.Category,
+                    IsActive = request.IsActive,
+                    CreatedBy = existingService.CreatedBy // Giữ nguyên CreatedBy
+                };
 
-                var updatedService = await _serviceRepository.UpdateAsync(existingService);
+                var updatedService = await _sqlServerService.UpdateServiceAsync(id, serviceToUpdate);
                 return Ok(updatedService);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new { message = "Lỗi EF Core: " + ex.Message });
             }
         }
 
@@ -151,18 +162,17 @@ namespace HotelServiceAPI.Controllers
         {
             try
             {
-                var existingService = await _serviceRepository.GetByIdAsync(id);
-                if (existingService == null)
+                var deleted = await _sqlServerService.DeleteServiceAsync(id);
+                if (!deleted)
                 {
                     return NotFound(new { message = "Service không tồn tại" });
                 }
 
-                await _serviceRepository.DeleteAsync(id);
                 return Ok(new { message = "Xóa service thành công" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new { message = "Lỗi EF Core: " + ex.Message });
             }
         }
 
@@ -173,7 +183,7 @@ namespace HotelServiceAPI.Controllers
         {
             try
             {
-                var services = await _serviceRepository.GetAllServicesForExportAsync();
+                var services = await _sqlServerService.GetAllServicesForExportAsync();
                 var excelData = await _excelService.ExportServicesToExcelAsync(services);
 
                 var fileName = $"Services_Export_{DateTime.Now:yyyyMMdd_HHmmss}.xlsx";
@@ -181,7 +191,7 @@ namespace HotelServiceAPI.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new { message = $"Lỗi EF Core khi export: {ex.Message}" });
             }
         }
 
@@ -233,7 +243,7 @@ namespace HotelServiceAPI.Controllers
                             UpdatedAt = DateTime.UtcNow
                         };
 
-                        await _serviceRepository.CreateAsync(service);
+                        await _sqlServerService.CreateServiceAsync(service);
                         successCount++;
                     }
                     catch (Exception ex)
@@ -253,6 +263,29 @@ namespace HotelServiceAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
+            }
+        }
+
+        // DELETE: api/services/all - Xóa tất cả services (chỉ admin)
+        [HttpDelete("all")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteAllServices()
+        {
+            try
+            {
+                var result = await _sqlServerService.DeleteAllServicesAsync();
+                if (result)
+                {
+                    return Ok(new { message = "Đã xóa tất cả services thành công" });
+                }
+                else
+                {
+                    return NotFound(new { message = "Không có services nào để xóa" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Lỗi EF Core khi xóa tất cả services: {ex.Message}" });
             }
         }
     }

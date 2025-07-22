@@ -25,8 +25,6 @@ namespace HotelServiceAPI.Models.DTOs
         public string? Category { get; set; }
         
         public bool IsActive { get; set; } = true;
-        
-        public int CreatedBy { get; set; }
     }
 
     public class ServiceUpdateDto

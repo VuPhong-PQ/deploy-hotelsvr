@@ -33,7 +33,7 @@ namespace HotelServiceAPI.Models
         [ForeignKey("BlogId")]
         public virtual Blog? Blog { get; set; }
 
-        [ForeignKey("UserId")]
-        public virtual User? User { get; set; }
+        // TEMPORARILY DISABLED to fix shadow property conflict
+        // public virtual User? User { get; set; }
     }
 }
