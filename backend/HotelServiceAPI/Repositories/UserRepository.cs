@@ -19,7 +19,7 @@ namespace HotelServiceAPI.Repositories
             return await _context.Users
                 .Include(u => u.Blogs)
                 .Include(u => u.Comments)
-                .Include(u => u.CreatedServices)
+                // .Include(u => u.CreatedServices) // Tạm thời comment
                 .ToListAsync();
         }
 
@@ -28,7 +28,7 @@ namespace HotelServiceAPI.Repositories
             return await _context.Users
                 .Include(u => u.Blogs)
                 .Include(u => u.Comments)
-                .Include(u => u.CreatedServices)
+                // .Include(u => u.CreatedServices) // Tạm thời comment
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 

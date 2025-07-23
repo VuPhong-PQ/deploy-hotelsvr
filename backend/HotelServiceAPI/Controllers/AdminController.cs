@@ -44,7 +44,8 @@ namespace HotelServiceAPI.Controllers
                 var totalServices = await _context.Services.CountAsync();
                 var activeServices = await _context.Services.CountAsync(s => s.IsActive);
                 var totalBlogs = await _context.Blogs.CountAsync();
-                var totalComments = await _context.Comments.CountAsync();
+                // var totalComments = await _context.Comments.CountAsync(); // TEMPORARILY DISABLED
+                var totalComments = 0;
 
                 var recentUsers = await _context.Users
                     .OrderByDescending(u => u.CreatedAt)
@@ -53,10 +54,10 @@ namespace HotelServiceAPI.Controllers
                     .ToListAsync();
 
                 var recentServices = await _context.Services
-                    .Include(s => s.CreatedByUser)
+                    // .Include(s => s.CreatedByUser) // Tạm thời comment để tránh lỗi FK
                     .OrderByDescending(s => s.CreatedAt)
                     .Take(5)
-                    .Select(s => new { s.Id, s.Name, s.Price, s.Category, s.IsActive, s.CreatedAt, CreatedBy = s.CreatedByUser.FullName })
+                    .Select(s => new { s.Id, s.Name, s.Price, s.Category, s.IsActive, s.CreatedAt, CreatedBy = "Admin" }) // s.CreatedByUser.FullName })
                     .ToListAsync();
 
                 return Ok(new
@@ -99,7 +100,7 @@ namespace HotelServiceAPI.Controllers
                         u.CreatedAt,
                         BlogsCount = u.Blogs.Count(),
                         CommentsCount = u.Comments.Count(),
-                        ServicesCount = u.CreatedServices.Count()
+                        ServicesCount = 0 // Tạm thời set 0 vì đã comment CreatedServices
                     })
                     .OrderByDescending(u => u.CreatedAt)
                     .ToListAsync();

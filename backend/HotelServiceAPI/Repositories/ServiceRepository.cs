@@ -17,7 +17,7 @@ namespace HotelServiceAPI.Repositories
         public async Task<IEnumerable<Service>> GetAllAsync()
         {
             return await _context.Services
-                .Include(s => s.CreatedByUser)
+                // .Include(s => s.CreatedByUser) // Tạm thời comment để tránh lỗi FK
                 .OrderBy(s => s.Name)
                 .ToListAsync();
         }
@@ -25,7 +25,7 @@ namespace HotelServiceAPI.Repositories
         public async Task<IEnumerable<Service>> GetActiveServicesAsync()
         {
             return await _context.Services
-                .Include(s => s.CreatedByUser)
+                // .Include(s => s.CreatedByUser) // Tạm thời comment để tránh lỗi FK
                 .Where(s => s.IsActive)
                 .OrderBy(s => s.Name)
                 .ToListAsync();
@@ -34,7 +34,7 @@ namespace HotelServiceAPI.Repositories
         public async Task<IEnumerable<Service>> GetServicesByCategoryAsync(string category)
         {
             return await _context.Services
-                .Include(s => s.CreatedByUser)
+                // .Include(s => s.CreatedByUser) // Tạm thời comment để tránh lỗi FK
                 .Where(s => s.IsActive && s.Category == category)
                 .OrderBy(s => s.Name)
                 .ToListAsync();
@@ -43,7 +43,7 @@ namespace HotelServiceAPI.Repositories
         public async Task<Service?> GetByIdAsync(int id)
         {
             return await _context.Services
-                .Include(s => s.CreatedByUser)
+                // .Include(s => s.CreatedByUser) // Tạm thời comment để tránh lỗi FK
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
 
@@ -55,8 +55,8 @@ namespace HotelServiceAPI.Repositories
             _context.Services.Add(service);
             await _context.SaveChangesAsync();
             
-            // Return the service with related data
-            return await GetByIdAsync(service.Id) ?? service;
+            // Return the service without navigation properties to avoid the FK issue for now
+            return service;
         }
 
         public async Task<Service> UpdateAsync(Service service)
@@ -93,7 +93,7 @@ namespace HotelServiceAPI.Repositories
         public async Task<IEnumerable<Service>> GetAllServicesAsync()
         {
             return await _context.Services
-                .Include(s => s.CreatedByUser)
+                // .Include(s => s.CreatedByUser) // Tạm thời comment để tránh lỗi FK
                 .OrderByDescending(s => s.CreatedAt)
                 .ToListAsync();
         }
@@ -102,7 +102,7 @@ namespace HotelServiceAPI.Repositories
         public async Task<IEnumerable<ServiceExportDto>> GetAllServicesForExportAsync()
         {
             return await _context.Services
-                .Include(s => s.CreatedByUser)
+                // .Include(s => s.CreatedByUser) // Tạm thời comment để tránh lỗi FK
                 .Select(s => new ServiceExportDto
                 {
                     Id = s.Id,
@@ -113,7 +113,7 @@ namespace HotelServiceAPI.Repositories
                     Price = s.Price,
                     Category = s.Category,
                     IsActive = s.IsActive,
-                    CreatedByName = s.CreatedByUser.FullName,
+                    CreatedByName = "Admin", // s.CreatedByUser.FullName, // Tạm thời hardcode
                     CreatedAt = s.CreatedAt,
                     UpdatedAt = s.UpdatedAt
                 })

@@ -101,18 +101,13 @@ namespace HotelServiceAPI.Migrations
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserId1")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BlogId");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("HotelServiceAPI.Models.Service", b =>
@@ -132,9 +127,6 @@ namespace HotelServiceAPI.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CreatedBy")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CreatedByUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -166,8 +158,6 @@ namespace HotelServiceAPI.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
-
-                    b.HasIndex("CreatedByUserId");
 
                     b.ToTable("Services");
                 });
@@ -227,7 +217,8 @@ namespace HotelServiceAPI.Migrations
                         .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_Blogs_Users_AuthorId");
 
                     b.HasOne("HotelServiceAPI.Models.User", null)
                         .WithMany("Blogs")
@@ -244,18 +235,11 @@ namespace HotelServiceAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HotelServiceAPI.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
                     b.HasOne("HotelServiceAPI.Models.User", null)
                         .WithMany("Comments")
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Blog");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HotelServiceAPI.Models.Service", b =>
@@ -264,15 +248,8 @@ namespace HotelServiceAPI.Migrations
                         .WithMany()
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("HotelServiceAPI.Models.User", "CreatedByUser")
-                        .WithMany("CreatedServices")
-                        .HasForeignKey("CreatedByUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CreatedByUser");
+                        .IsRequired()
+                        .HasConstraintName("FK_Services_Users_CreatedBy");
                 });
 
             modelBuilder.Entity("HotelServiceAPI.Models.User", b =>
@@ -280,8 +257,6 @@ namespace HotelServiceAPI.Migrations
                     b.Navigation("Blogs");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("CreatedServices");
                 });
 #pragma warning restore 612, 618
         }
