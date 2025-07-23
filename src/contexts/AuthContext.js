@@ -9,22 +9,29 @@ export const AuthProvider = ({ children }) => {
     return userLoggined || null;
   });
 
-  const login = (user, token) => {
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem('token') || null;
+  });
+
+  const login = (user, authToken) => {
     setUserCurrent(user);
+    setToken(authToken);
     localStorage.setItem('user', JSON.stringify(user));
-    if (token) {
-      localStorage.setItem('token', token);
+    if (authToken) {
+      localStorage.setItem('token', authToken);
     }
   };
 
   const logout = () => {
     setUserCurrent(null);
+    setToken(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
   };
 
   const value = {
     userCurrent,
+    token,
     onChangeUserCurrent: setUserCurrent,
     login,
     logout,

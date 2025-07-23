@@ -211,6 +211,159 @@ namespace HotelServiceAPI.Controllers
                 return 0;
             }
         }
+
+        // =============================================================================
+        // USER MANAGEMENT ENDPOINTS
+        // =============================================================================
+
+        // POST: api/admin/users - Tạo user mới
+        [HttpPost("users")]
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+        {
+            try
+            {
+                // Kiểm tra email đã tồn tại
+                var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+                if (existingUser != null)
+                {
+                    return BadRequest(new { message = "Email đã được sử dụng" });
+                }
+
+                var user = new User
+                {
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Email = request.Email,
+                    Phone = request.Phone,
+                    Role = request.Role,
+                    Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                return Ok(new 
+                { 
+                    message = "Tạo user thành công",
+                    user = new { user.Id, user.FirstName, user.LastName, user.Email, user.Phone, user.Role, user.CreatedAt }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        // PUT: api/admin/users/{id} - Cập nhật user
+        [HttpPut("users/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UpdateUserRequest request)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(id);
+                if (user == null)
+                {
+                    return NotFound(new { message = "User không tồn tại" });
+                }
+
+                // Kiểm tra email trùng (nếu thay đổi email)
+                if (user.Email != request.Email)
+                {
+                    var existingUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email && u.Id != id);
+                    if (existingUser != null)
+                    {
+                        return BadRequest(new { message = "Email đã được sử dụng" });
+                    }
+                }
+
+                user.FirstName = request.FirstName;
+                user.LastName = request.LastName;
+                user.Email = request.Email;
+                user.Phone = request.Phone;
+                user.Role = request.Role;
+
+                // Chỉ cập nhật password nếu có giá trị mới
+                if (!string.IsNullOrEmpty(request.Password))
+                {
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(request.Password);
+                }
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new 
+                { 
+                    message = "Cập nhật user thành công",
+                    user = new { user.Id, user.FirstName, user.LastName, user.Email, user.Phone, user.Role, user.CreatedAt }
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        // =============================================================================
+        // BLOG MANAGEMENT ENDPOINTS
+        // =============================================================================
+
+        // GET: api/admin/blogs - Lấy tất cả blogs của tất cả users
+        [HttpGet("blogs")]
+        public async Task<IActionResult> GetAllBlogs()
+        {
+            try
+            {
+                var blogs = await _context.Blogs
+                    .Include(b => b.Author)
+                    .OrderByDescending(b => b.CreatedAt)
+                    .Select(b => new
+                    {
+                        b.Id,
+                        b.Title,
+                        b.Content,
+                        b.Quote,
+                        b.ImageUrl,
+                        b.CreatedAt,
+                        b.UpdatedAt,
+                        Author = new
+                        {
+                            b.Author.Id,
+                            b.Author.FirstName,
+                            b.Author.LastName,
+                            FullName = b.Author.FirstName + " " + b.Author.LastName,
+                            b.Author.Email
+                        }
+                    })
+                    .ToListAsync();
+
+                return Ok(blogs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Lỗi EF Core: " + ex.Message });
+            }
+        }
+    }
+
+    // DTOs for new endpoints
+    public class CreateUserRequest
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string? Phone { get; set; }
+        public string Role { get; set; } = "User";
+        public string Password { get; set; } = string.Empty;
+    }
+
+    public class UpdateUserRequest
+    {
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string? Phone { get; set; }
+        public string Role { get; set; } = "User";
+        public string? Password { get; set; }
     }
 
     // DTO for updating user role

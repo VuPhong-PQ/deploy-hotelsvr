@@ -80,17 +80,22 @@ Hệ thống đã có sẵn demo data:
 
 ## 🔧 Chế Độ API
 
-Hiện tại đang sử dụng **Mock API** để demo giao diện.
+Hiện tại đang sử dụng **Real API** kết nối SQL Server.
 
-Để chuyển sang Real API:
-1. Đảm bảo backend API đang chạy trên port 5000
-2. Sửa file `src/apis/admin.api.js`:
+Cấu hình hiện tại:
+- ✅ **Services API:** Real API (SQL Server)
+- ✅ **Users API:** Real API (SQL Server) 
+- ✅ **Blogs API:** Real API (SQL Server)
+- ❌ **Comments API:** Disabled (table removed)
+
+Để chuyển về Mock API (nếu cần):
+1. Sửa file `src/apis/admin.api.js`:
    ```javascript
-   const USE_MOCK_ADMIN_API = false;
+   const USE_MOCK_ADMIN_API = true;
    ```
-3. Sửa file `src/apis/user.api.js`:
+2. Sửa file `src/apis/user.api.js`:
    ```javascript
-   const USE_MOCK_API = false;
+   const USE_MOCK_API = true;
    ```
 
 ## 🚨 Lưu Ý

@@ -19,7 +19,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
-// builder.Services.AddScoped<ICommentRepository, CommentRepository>(); // TEMPORARILY DISABLED
+// builder.Services.AddScoped<ICommentRepository, CommentRepository>(); // DISABLED - TABLE REMOVED
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 
 // Services
@@ -60,7 +60,9 @@ builder.Services.AddCors(options =>
                 "http://localhost:3000", 
                 "http://127.0.0.1:3000",
                 "http://localhost:3001",
-                "http://127.0.0.1:3001"
+                "http://127.0.0.1:3001",
+                "http://localhost:3002",
+                "http://127.0.0.1:3002"
               )
               .AllowAnyHeader()
               .AllowAnyMethod()

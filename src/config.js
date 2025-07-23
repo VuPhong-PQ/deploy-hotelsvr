@@ -1,5 +1,8 @@
 const API_BASE_URL = 'http://localhost:5000/api';
 
+// Export BASE_URL for compatibility
+export const BASE_URL = API_BASE_URL;
+
 // Cấu hình sử dụng mock API khi backend không hoạt động
 export const USE_MOCK_API = false; // Đặt false khi backend đã sẵn sàng
 

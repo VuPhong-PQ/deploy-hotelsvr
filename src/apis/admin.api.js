@@ -59,6 +59,21 @@ api.interceptors.response.use(
 );
 
 // =============================================================================
+// TEST API CONNECTION
+// =============================================================================
+
+export const useTestConnection = () => {
+  return useQuery({
+    queryKey: ['test', 'connection'],
+    queryFn: async () => {
+      const response = await axios.get('http://localhost:5000/api/debug/database-status');
+      return response.data;
+    },
+    retry: 1
+  });
+};
+
+// =============================================================================
 // DASHBOARD APIs
 // =============================================================================
 
@@ -71,7 +86,8 @@ export const useGetDashboard = () => {
       const response = await api.get('/admin/dashboard');
       return response.data;
     },
-    enabled: !USE_MOCK_ADMIN_API
+    enabled: !USE_MOCK_ADMIN_API,
+    retry: 1
   });
 
   return USE_MOCK_ADMIN_API ? mockResult : realResult;
@@ -280,6 +296,27 @@ export const useGetAllUsers = () => {
   return USE_MOCK_ADMIN_API ? mockResult : realResult;
 };
 
+export const useCreateUser = () => {
+  const queryClient = useQueryClient();
+  
+  const realResult = useMutation({
+    mutationFn: async (userData) => {
+      const response = await api.post('/admin/users', userData);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] });
+    },
+    onError: (error) => {
+      console.error('Create user error:', error);
+      throw new Error(error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi tạo user');
+    },
+  });
+
+  return USE_MOCK_ADMIN_API ? { mutateAsync: () => Promise.resolve() } : realResult;
+};
+
 export const useUpdateUserRole = () => {
   const mockResult = mockUseUpdateUserRole();
   const queryClient = useQueryClient();
@@ -301,6 +338,27 @@ export const useUpdateUserRole = () => {
   return USE_MOCK_ADMIN_API ? mockResult : realResult;
 };
 
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  
+  const realResult = useMutation({
+    mutationFn: async ({ id, userData }) => {
+      const response = await api.put(`/admin/users/${id}`, userData);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] });
+    },
+    onError: (error) => {
+      console.error('Update user error:', error);
+      throw new Error(error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi cập nhật user');
+    },
+  });
+
+  return USE_MOCK_ADMIN_API ? { mutateAsync: () => Promise.resolve() } : realResult;
+};
+
 export const useDeleteUser = () => {
   const mockResult = mockUseDeleteUser();
   const queryClient = useQueryClient();
@@ -312,6 +370,7 @@ export const useDeleteUser = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin', 'users'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] });
     },
     onError: (error) => {
       console.error('Delete user error:', error);
@@ -320,6 +379,178 @@ export const useDeleteUser = () => {
   });
 
   return USE_MOCK_ADMIN_API ? mockResult : realResult;
+};
+
+export const useExportUsers = () => {
+  const realResult = useMutation({
+    mutationFn: async () => {
+      const response = await api.get('/admin/users/export', {
+        responseType: 'blob',
+      });
+      
+      // Tạo blob URL và download
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `Users_Export_${new Date().toISOString().slice(0, 10)}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      return response.data;
+    },
+    onError: (error) => {
+      console.error('Export users error:', error);
+      throw new Error(error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi export');
+    },
+  });
+
+  return USE_MOCK_ADMIN_API ? { mutateAsync: () => Promise.resolve() } : realResult;
+};
+
+export const useImportUsers = () => {
+  const queryClient = useQueryClient();
+  
+  const realResult = useMutation({
+    mutationFn: async (file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const response = await api.post('/admin/users/import', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] });
+    },
+    onError: (error) => {
+      console.error('Import users error:', error);
+      throw new Error(error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi import');
+    },
+  });
+
+  return USE_MOCK_ADMIN_API ? { mutateAsync: () => Promise.resolve() } : realResult;
+};
+
+export const useDownloadUserTemplate = () => {
+  const realResult = useMutation({
+    mutationFn: async () => {
+      const response = await api.get('/template/users-import', {
+        responseType: 'blob',
+      });
+      
+      // Tạo blob URL và download
+      const blob = new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'Users_Import_Template.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      return response.data;
+    },
+    onError: (error) => {
+      console.error('Download template error:', error);
+      throw new Error(error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi download template');
+    },
+  });
+
+  return USE_MOCK_ADMIN_API ? { mutateAsync: () => Promise.resolve() } : realResult;
+};
+
+// =============================================================================
+// BLOG MANAGEMENT APIs
+// =============================================================================
+
+export const useGetAllBlogsAdmin = () => {
+  const realResult = useQuery({
+    queryKey: ['admin', 'blogs'],
+    queryFn: async () => {
+      const response = await api.get('/admin/blogs');
+      return response.data;
+    },
+    enabled: !USE_MOCK_ADMIN_API
+  });
+
+  return USE_MOCK_ADMIN_API ? { data: [], isLoading: false, error: null } : realResult;
+};
+
+export const useCreateBlog = () => {
+  const queryClient = useQueryClient();
+  
+  const realResult = useMutation({
+    mutationFn: async (blogData) => {
+      const response = await api.post('/blogs', blogData);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'blogs'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['blogs'] });
+    },
+    onError: (error) => {
+      console.error('Create blog error:', error);
+      throw new Error(error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi tạo blog');
+    },
+  });
+
+  return USE_MOCK_ADMIN_API ? { mutateAsync: () => Promise.resolve() } : realResult;
+};
+
+export const useUpdateBlog = () => {
+  const queryClient = useQueryClient();
+  
+  const realResult = useMutation({
+    mutationFn: async ({ id, blogData }) => {
+      const response = await api.put(`/blogs/${id}`, blogData);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'blogs'] });
+      queryClient.invalidateQueries({ queryKey: ['blogs'] });
+    },
+    onError: (error) => {
+      console.error('Update blog error:', error);
+      throw new Error(error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi cập nhật blog');
+    },
+  });
+
+  return USE_MOCK_ADMIN_API ? { mutateAsync: () => Promise.resolve() } : realResult;
+};
+
+export const useDeleteBlog = () => {
+  const queryClient = useQueryClient();
+  
+  const realResult = useMutation({
+    mutationFn: async (blogId) => {
+      const response = await api.delete(`/blogs/${blogId}`);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin', 'blogs'] });
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] });
+      queryClient.invalidateQueries({ queryKey: ['blogs'] });
+    },
+    onError: (error) => {
+      console.error('Delete blog error:', error);
+      throw new Error(error.response?.data?.message || error.message || 'Đã có lỗi xảy ra khi xóa blog');
+    },
+  });
+
+  return USE_MOCK_ADMIN_API ? { mutateAsync: () => Promise.resolve() } : realResult;
 };
 
 // =============================================================================
