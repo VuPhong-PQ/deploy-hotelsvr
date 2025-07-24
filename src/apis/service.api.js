@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import { BASE_URL } from '../config';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -31,22 +30,28 @@ const deleteService = (id) => {
 	return axios.delete(URL.delete(id));
 };
 
-export const useGetServices = () => {
+// React Query Hooks
+export const useGetAllServices = () => {
 	return useQuery({
-		queryFn: getServices,
 		queryKey: ['services'],
-		staleTime: 10000,
-		gcTime: 15000,
-		select: (data) => data.data,
+		queryFn: async () => {
+			const response = await getServices();
+			return response.data;
+		},
+		retry: 1,
+		staleTime: 5 * 60 * 1000, // 5 minutes
 	});
 };
 
 export const useGetServiceById = (id) => {
 	return useQuery({
-		queryFn: () => getServiceById(id),
-		queryKey: ['service', id],
+		queryKey: ['services', id],
+		queryFn: async () => {
+			const response = await getServiceById(id);
+			return response.data;
+		},
 		enabled: !!id,
-		select: (data) => data.data,
+		retry: 1,
 	});
 };
 

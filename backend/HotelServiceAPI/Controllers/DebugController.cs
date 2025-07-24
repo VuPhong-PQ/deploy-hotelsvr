@@ -163,36 +163,34 @@ namespace HotelServiceAPI.Controllers
         {
             try
             {
-                // Kiểm tra nếu đã có services
-                var existingCount = await _context.Services.CountAsync();
-                if (existingCount > 0)
-                {
-                    return Ok(new { message = $"Database đã có {existingCount} services" });
-                }
+                // Xóa tất cả services cũ
+                var existingServices = await _context.Services.ToListAsync();
+                _context.Services.RemoveRange(existingServices);
+                await _context.SaveChangesAsync();
 
-                // Tạo sample services
+                // Tạo sample services đầy đủ
                 var sampleServices = new List<Service>
                 {
                     new Service
                     {
                         Name = "Spa & Wellness Center",
-                        Description = "Thư giãn và tái tạo năng lượng với các liệu pháp spa cao cấp",
-                        ImageUrl = "/images/spa.jpg",
+                        Description = "Thư giãn và tái tạo năng lượng với các liệu pháp spa cao cấp, massage trị liệu và dịch vụ chăm sóc sức khỏe toàn diện",
+                        ImageUrl = "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
                         Icon = "fa-spa",
-                        Price = 150.00m,
+                        Price = 1500000.00m,
                         Category = "Spa",
                         IsActive = true,
-                        CreatedBy = 1, // Admin user
+                        CreatedBy = 1,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     },
                     new Service
                     {
                         Name = "Nhà Hàng Cao Cấp",
-                        Description = "Trải nghiệm ẩm thực đẳng cấp với các món ăn từ đầu bếp chuyên nghiệp",
-                        ImageUrl = "/images/restaurant.jpg",
+                        Description = "Trải nghiệm ẩm thực đẳng cấp với các món ăn được chế biến bởi đầu bếp Michelin, phục vụ trong không gian sang trọng",
+                        ImageUrl = "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
                         Icon = "fa-utensils",
-                        Price = 200.00m,
+                        Price = 2000000.00m,
                         Category = "Ẩm thực",
                         IsActive = true,
                         CreatedBy = 1,
@@ -201,12 +199,51 @@ namespace HotelServiceAPI.Controllers
                     },
                     new Service
                     {
-                        Name = "Gym & Fitness",
-                        Description = "Phòng gym hiện đại với đầy đủ trang thiết bị tập luyện",
-                        ImageUrl = "/images/gym.jpg",
+                        Name = "Gym & Fitness Center",
+                        Description = "Phòng gym hiện đại với đầy đủ trang thiết bị tập luyện cao cấp, huấn luyện viên cá nhân và các lớp group fitness",
+                        ImageUrl = "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
                         Icon = "fa-dumbbell",
-                        Price = 80.00m,
+                        Price = 800000.00m,
                         Category = "Thể thao",
+                        IsActive = true,
+                        CreatedBy = 1,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    },
+                    new Service
+                    {
+                        Name = "Dịch Vụ Hồ Bơi VIP",
+                        Description = "Hồ bơi riêng tư với view panoramic, dịch vụ poolside service và khu vực nghỉ dưỡng độc quyền",
+                        ImageUrl = "https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        Icon = "fa-swimmer",
+                        Price = 1200000.00m,
+                        Category = "Giải trí",
+                        IsActive = true,
+                        CreatedBy = 1,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    },
+                    new Service
+                    {
+                        Name = "Dịch Vụ Concierge 24/7",
+                        Description = "Dịch vụ quản gia cá nhân 24/7, hỗ trợ đặt tour, mua sắm, và mọi nhu cầu trong thời gian lưu trú",
+                        ImageUrl = "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        Icon = "fa-concierge-bell",
+                        Price = 500000.00m,
+                        Category = "Dịch vụ",
+                        IsActive = true,
+                        CreatedBy = 1,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    },
+                    new Service
+                    {
+                        Name = "Bar Rooftop Exclusive",
+                        Description = "Bar cao tầng với view thành phố tuyệt đẹp, cocktails signature và không gian thư giãn cao cấp",
+                        ImageUrl = "https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                        Icon = "fa-cocktail",
+                        Price = 900000.00m,
+                        Category = "Giải trí",
                         IsActive = true,
                         CreatedBy = 1,
                         CreatedAt = DateTime.UtcNow,

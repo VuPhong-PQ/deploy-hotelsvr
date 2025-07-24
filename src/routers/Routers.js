@@ -12,6 +12,7 @@ import ReservationConfirmation from "../pages/ReservationConfirmation";
 import CreateBlog from "../pages/CreateBlog";
 import EditBlog from "../pages/EditBlog";
 import MyBlogs from "../pages/MyBlogs";
+import Services from "../pages/Services";
 import AdminDashboard from "../components/Admin/AdminDashboard";
 
 const Routers = () => {
@@ -20,7 +21,8 @@ const Routers = () => {
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<Home />} />
       <Route path="/about" element={<About />} />
-      <Route path="/services" element={<Listing />} />
+      <Route path="/services" element={<Services />} />
+      <Route path="/listing" element={<Listing />} />
       <Route path="/services/:slug" element={<Details />} />
       <Route path="/blogs" element={<Blog />} />
       <Route path="/blogs/:id" element={<BlogDetails />} />
