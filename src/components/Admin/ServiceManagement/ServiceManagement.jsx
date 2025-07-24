@@ -229,47 +229,100 @@ const ServiceManagement = () => {
         </Alert>
       ))}
 
-      {/* Header */}
-      <Row className="align-items-center mb-4">
-        <Col>
-          <h3>
-            <i className="fas fa-concierge-bell me-2"></i>
-            Quản lý dịch vụ
-          </h3>
+      {/* Header với Card */}
+      <div className="admin-header-card">
+        <Row className="align-items-center">
+          <Col>
+            <div className="admin-header-content">
+              <h3 className="admin-title">
+                <i className="fas fa-concierge-bell me-3"></i>
+                Quản lý dịch vụ
+              </h3>
+              <p className="admin-subtitle">Quản lý tất cả dịch vụ khách sạn và spa</p>
+            </div>
+          </Col>
+          <Col xs="auto">
+            <ButtonGroup>
+              <Button 
+                className="btn-admin btn-admin-primary"
+                onClick={() => openModal()}
+              >
+                <i className="fas fa-plus me-2"></i>
+                Thêm dịch vụ
+              </Button>
+              <Button 
+                className="btn-admin btn-admin-success"
+                onClick={handleExport}
+                disabled={exportMutation.isLoading}
+              >
+                <i className="fas fa-file-excel me-2"></i>
+                Xuất Excel
+              </Button>
+              <Button 
+                className="btn-admin btn-admin-warning"
+                onClick={() => setShowImportModal(true)}
+              >
+                <i className="fas fa-file-import me-2"></i>
+                Nhập Excel
+              </Button>
+              <Button 
+                className="btn-admin btn-admin-info"
+                onClick={handleDownloadTemplate}
+                disabled={downloadTemplateMutation.isLoading}
+              >
+                <i className="fas fa-download me-2"></i>
+                Tải Template
+              </Button>
+            </ButtonGroup>
+          </Col>
+        </Row>
+      </div>
+
+      {/* Stats Cards */}
+      <Row className="mb-4">
+        <Col md="3">
+          <div className="admin-stat-card">
+            <div className="admin-stat-icon">
+              <i className="fas fa-concierge-bell"></i>
+            </div>
+            <div className="admin-stat-content">
+              <h4>{services?.length || 0}</h4>
+              <p>Tổng dịch vụ</p>
+            </div>
+          </div>
         </Col>
-        <Col xs="auto">
-          <ButtonGroup>
-            <Button 
-              className="btn-admin btn-admin-primary"
-              onClick={() => openModal()}
-            >
-              <i className="fas fa-plus me-2"></i>
-              Thêm dịch vụ
-            </Button>
-            <Button 
-              className="btn-admin btn-admin-success"
-              onClick={handleExport}
-              disabled={exportMutation.isLoading}
-            >
-              <i className="fas fa-file-excel me-2"></i>
-              Xuất Excel
-            </Button>
-            <Button 
-              className="btn-admin btn-admin-warning"
-              onClick={() => setShowImportModal(true)}
-            >
-              <i className="fas fa-file-import me-2"></i>
-              Nhập Excel
-            </Button>
-            <Button 
-              className="btn-admin btn-admin-info"
-              onClick={handleDownloadTemplate}
-              disabled={downloadTemplateMutation.isLoading}
-            >
-              <i className="fas fa-download me-2"></i>
-              Tải Template
-            </Button>
-          </ButtonGroup>
+        <Col md="3">
+          <div className="admin-stat-card">
+            <div className="admin-stat-icon">
+              <i className="fas fa-check-circle"></i>
+            </div>
+            <div className="admin-stat-content">
+              <h4>{services ? services.filter(s => s.isActive).length : 0}</h4>
+              <p>Đang hoạt động</p>
+            </div>
+          </div>
+        </Col>
+        <Col md="3">
+          <div className="admin-stat-card">
+            <div className="admin-stat-icon">
+              <i className="fas fa-pause-circle"></i>
+            </div>
+            <div className="admin-stat-content">
+              <h4>{services ? services.filter(s => !s.isActive).length : 0}</h4>
+              <p>Tạm dừng</p>
+            </div>
+          </div>
+        </Col>
+        <Col md="3">
+          <div className="admin-stat-card">
+            <div className="admin-stat-icon">
+              <i className="fas fa-tags"></i>
+            </div>
+            <div className="admin-stat-content">
+              <h4>{services ? new Set(services.map(s => s.category)).size : 0}</h4>
+              <p>Danh mục</p>
+            </div>
+          </div>
         </Col>
       </Row>
 
@@ -278,9 +331,9 @@ const ServiceManagement = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Tên dịch vụ</th>
-            <th>Danh mục</th>
-            <th>Giá</th>
+            <th>Hình ảnh</th>
+            <th>Thông tin dịch vụ</th>
+            <th>Giá tiền</th>
             <th>Trạng thái</th>
             <th>Ngày tạo</th>
             <th>Hành động</th>
@@ -290,42 +343,92 @@ const ServiceManagement = () => {
           {services && services.length > 0 ? (
             services.map(service => (
               <tr key={service.id}>
-                <td>{service.id}</td>
                 <td>
-                  <div className="d-flex align-items-center">
-                    <i className={`${service.icon || 'fas fa-concierge-bell'} me-2`}></i>
-                    {service.name}
+                  <span className="badge badge-admin badge-admin-success">{service.id}</span>
+                </td>
+                <td>
+                  {service.imageUrl ? (
+                    <img 
+                      src={service.imageUrl} 
+                      alt={service.name}
+                      className="service-image"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div 
+                    className="icon-placeholder" 
+                    style={service.imageUrl ? { display: 'none' } : {}}
+                  >
+                    <i className={service.icon || 'fas fa-concierge-bell'}></i>
                   </div>
                 </td>
-                <td>{service.category}</td>
-                <td>${service.price}</td>
-                <td>{getStatusBadge(service.isActive)}</td>
                 <td>
-                  {service.createdAt ? new Date(service.createdAt).toLocaleDateString('vi-VN') : 'N/A'}
+                  <div className="service-info">
+                    <div className="service-name">{service.name}</div>
+                    <div className="service-category">{service.category || 'Không có danh mục'}</div>
+                    <div className="service-description">
+                      {service.description || 'Không có mô tả'}
+                    </div>
+                  </div>
                 </td>
                 <td>
-                  <ButtonGroup size="sm">
+                  <div className="service-price">{service.price?.toLocaleString('vi-VN')}</div>
+                </td>
+                <td>{getStatusBadge(service.isActive)}</td>
+                <td>
+                  <div className="admin-date-created">
+                    <i className="fas fa-calendar-plus me-1"></i>
+                    {service.createdAt ? new Date(service.createdAt).toLocaleDateString('vi-VN', {
+                      year: 'numeric',
+                      month: '2-digit',
+                      day: '2-digit'
+                    }) : 'N/A'}
+                  </div>
+                  {service.updatedAt && service.updatedAt !== service.createdAt && (
+                    <div className="admin-date-updated mt-1">
+                      <i className="fas fa-edit me-1"></i>
+                      {new Date(service.updatedAt).toLocaleDateString('vi-VN', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                      })}
+                    </div>
+                  )}
+                </td>
+                <td>
+                  <div className="action-buttons">
                     <Button 
-                      className="btn-admin btn-admin-warning"
+                      className="btn-action btn-action-edit"
                       onClick={() => openModal(service)}
+                      title="Chỉnh sửa dịch vụ"
                     >
-                      <i className="fas fa-edit"></i>
+                      <i className="fas fa-edit me-1"></i>
+                      Sửa
                     </Button>
                     <Button 
-                      className="btn-admin btn-admin-danger"
+                      className="btn-action btn-action-delete"
                       onClick={() => handleDelete(service.id)}
                       disabled={deleteMutation.isLoading}
+                      title="Xóa dịch vụ"
                     >
-                      <i className="fas fa-trash"></i>
+                      <i className="fas fa-trash me-1"></i>
+                      Xóa
                     </Button>
-                  </ButtonGroup>
+                  </div>
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan="7" className="text-center">
-                Không có dữ liệu dịch vụ
+              <td colSpan="7">
+                <div className="admin-empty-state">
+                  <i className="fas fa-concierge-bell fa-3x"></i>
+                  <h5>Chưa có dịch vụ nào</h5>
+                  <p>Bắt đầu bằng cách thêm dịch vụ mới cho khách sạn</p>
+                </div>
               </td>
             </tr>
           )}
