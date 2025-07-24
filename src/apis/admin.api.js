@@ -479,10 +479,29 @@ export const useGetAllBlogsAdmin = () => {
   const realResult = useQuery({
     queryKey: ['admin', 'blogs'],
     queryFn: async () => {
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      
+      console.log('🔍 Debug - Getting Blogs:', {
+        hasToken: !!token,
+        tokenPreview: token ? token.substring(0, 20) + '...' : 'No token',
+        user: user,
+        userRole: user?.role
+      });
+      
       const response = await api.get('/admin/blogs');
       return response.data;
     },
-    enabled: !USE_MOCK_ADMIN_API
+    enabled: !USE_MOCK_ADMIN_API,
+    retry: false, // Không retry để dễ debug
+    onError: (error) => {
+      console.error('❌ Blog API Error:', {
+        status: error.response?.status,
+        message: error.response?.data || error.message,
+        hasToken: !!localStorage.getItem('token'),
+        user: JSON.parse(localStorage.getItem('user') || '{}')
+      });
+    }
   });
 
   return USE_MOCK_ADMIN_API ? { data: [], isLoading: false, error: null } : realResult;

@@ -451,3 +451,91 @@
   color: #9ca3af;
   font-size: 1.2rem;
 }
+
+/* Image Preview Styles */
+.admin-image-preview {
+  margin-top: 1rem;
+}
+
+.admin-preview-image {
+  max-width: 200px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.admin-preview-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Blog-specific styles */
+.admin-title-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.admin-content-preview {
+  max-width: 200px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #6b7280;
+}
+
+.admin-user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-user-avatar {
+  font-size: 1.5rem;
+  color: #667eea;
+}
+
+.admin-user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-user-name {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.admin-user-email {
+  color: #9ca3af;
+  font-size: 0.8rem;
+}
+
+.admin-date {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Enhanced empty state */
+.admin-empty-state {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.admin-empty-state i {
+  color: #d1d5db !important;
+  margin-bottom: 1rem;
+}
+
+.admin-empty-state h5 {
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.admin-empty-state p {
+  color: #9ca3af;
+  margin-bottom: 0;
+}

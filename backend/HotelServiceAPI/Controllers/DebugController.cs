@@ -36,7 +36,7 @@ namespace HotelServiceAPI.Controllers
             }
             catch (Exception ex)
             {
-                return Ok(new
+                return BadRequest(new
                 {
                     DatabaseConnected = false,
                     Error = ex.Message,
@@ -45,6 +45,44 @@ namespace HotelServiceAPI.Controllers
             }
         }
 
+        [HttpGet("users-roles")]
+        public async Task<IActionResult> GetUsersAndRoles()
+        {
+            try
+            {
+                var users = await _context.Users
+                    .Select(u => new
+                    {
+                        u.Id,
+                        u.Email,
+                        u.FirstName,
+                        u.LastName,
+                        u.Role,
+                        u.CreatedAt
+                    })
+                    .ToListAsync();
+
+                return Ok(new
+                {
+                    Success = true,
+                    Users = users,
+                    TotalUsers = users.Count,
+                    AdminUsers = users.Count(u => u.Role == "Admin"),
+                    RegularUsers = users.Count(u => u.Role == "User"),
+                    Timestamp = DateTime.UtcNow
+                });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new
+                {
+                    Success = false,
+                    Error = ex.Message,
+                    Timestamp = DateTime.UtcNow
+                });
+            }
+        }
+                
         [HttpGet("users")]
         public async Task<IActionResult> GetUsers()
         {
