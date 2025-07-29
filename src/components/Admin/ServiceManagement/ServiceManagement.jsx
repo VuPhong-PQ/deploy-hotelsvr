@@ -401,6 +401,18 @@ const ServiceManagement = () => {
                 <td>
                   <div className="action-buttons">
                     <Button 
+                      className="btn-action btn-action-view"
+                      color="info"
+                      tag="a"
+                      href={`/services/${service.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title="Xem chi tiết dịch vụ"
+                    >
+                      <i className="fas fa-eye me-1"></i>
+                      Xem
+                    </Button>
+                    <Button 
                       className="btn-action btn-action-edit"
                       onClick={() => openModal(service)}
                       title="Chỉnh sửa dịch vụ"
