@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SThVSxJATA8=",
+  "dgSpecHash": "uinFiY+UHEY=",
   "success": true,
-  "projectFilePath": "D:\\laptrinh\\DoAnFull\\HotelServices\\backend\\HotelServiceAPI\\HotelServiceAPI.csproj",
+  "projectFilePath": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\HotelServiceAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
