@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-
 import { useGetServiceById } from "../apis/service.api";
 import { Container, Row, Col } from "reactstrap";
 import Helmet from "../components/Helmet/Helmet";
 import { useParams } from "react-router-dom";
 import BookingForm from "../components/UI/BookingForm";
 import PaymentMethod from "../components/UI/PaymentMethod";
+import config from '../config';
 
 const Details = () => {
   const { id } = useParams();
@@ -28,7 +28,23 @@ const Details = () => {
         <Container>
           <Row>
             <Col lg="6">
-              <img src={service.imageUrl} alt={service.name} className="w-100" />
+              {(() => {
+                let imageUrl = service.imageUrl;
+                if (imageUrl && !/^https?:\/\//i.test(imageUrl)) {
+                  imageUrl = (config.apiBaseUrl?.replace(/\/$/, '') || '') + '/' + imageUrl.replace(/^\//, '');
+                }
+                imageUrl = imageUrl ? imageUrl + (service.updatedAt ? `?v=${new Date(service.updatedAt).getTime()}` : '') : 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+                return (
+                  <img
+                    src={imageUrl}
+                    alt={service.name}
+                    className="w-100"
+                    onError={e => {
+                      e.target.src = 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+                    }}
+                  />
+                );
+              })()}
             </Col>
             <Col lg="6">
               <div className="service__info">

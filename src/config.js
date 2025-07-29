@@ -1,5 +1,11 @@
 const API_BASE_URL = 'http://localhost:5000/api';
 
+// Thêm export default cho config
+const config = {
+  apiBaseUrl: API_BASE_URL.replace(/\/api$/, ''), // Lấy domain gốc, không có /api
+};
+export default config;
+
 // Export BASE_URL for compatibility
 export const BASE_URL = API_BASE_URL;
 
