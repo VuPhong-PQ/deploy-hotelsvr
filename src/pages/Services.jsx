@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Card, CardBody, Badge, Button } from 'reactstrap';
 import { useGetAllServices } from '../apis/service.api';
+import { Link } from 'react-router-dom';
 import '../styles/services.css';
 
 const Services = () => {
@@ -122,65 +123,64 @@ const Services = () => {
             <Row>
               {services.map((service, index) => (
                 <Col lg="4" md="6" className="mb-4" key={service.id}>
-                  <Card className="service-card h-100 shadow-sm">
-                    <div className="service-image-wrapper">
-                      <img 
-                        src={service.imageUrl || 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'} 
-                        alt={service.name}
-                        className="service-image"
-                        onError={(e) => {
-                          e.target.src = 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
-                        }}
-                      />
-                      <div className="service-overlay">
-                        <Badge 
-                          color={getCategoryColor(service.category)} 
-                          className="service-category"
-                        >
-                          {service.category}
-                        </Badge>
-                      </div>
-                    </div>
-                    
-                    <CardBody className="service-body">
-                      <div className="service-header">
-                        <h5 className="service-name">{service.name}</h5>
-                        <div className="service-price">
-                          {formatPrice(service.price)}
+                  <Link to={`/services/${service.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                    <Card className="service-card h-100 shadow-sm service-card-link" style={{ cursor: 'pointer' }}>
+                      <div className="service-image-wrapper">
+                        <img
+                          src={service.imageUrl ? service.imageUrl + (service.updatedAt ? `?v=${new Date(service.updatedAt).getTime()}` : '') : 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'}
+                          alt={service.name}
+                          className="service-image"
+                          onError={(e) => {
+                            e.target.src = 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+                          }}
+                        />
+                        <div className="service-overlay">
+                          <Badge
+                            color={getCategoryColor(service.category)}
+                            className="service-category"
+                          >
+                            {service.category}
+                          </Badge>
                         </div>
                       </div>
-                      
-                      <p className="service-description">
-                        {service.description}
-                      </p>
-                      
-                      <div className="service-footer">
-                        <div className="service-status">
-                          {service.isActive ? (
-                            <Badge color="success" className="status-badge">
-                              <i className="fas fa-check-circle me-1"></i>
-                              Đang hoạt động
-                            </Badge>
-                          ) : (
-                            <Badge color="secondary" className="status-badge">
-                              <i className="fas fa-pause-circle me-1"></i>
-                              Tạm dừng
-                            </Badge>
-                          )}
+                      <CardBody className="service-body">
+                        <div className="service-header">
+                          <h5 className="service-name">{service.name}</h5>
+                          <div className="service-price">
+                            {formatPrice(service.price)}
+                          </div>
                         </div>
-                        
-                        <Button 
-                          color="primary" 
-                          size="sm" 
-                          className="book-btn"
-                          disabled={!service.isActive}
-                        >
-                          <i className="fas fa-calendar-plus me-1"></i>
-                          Đặt ngay
-                        </Button>
-                      </div>
-                    </CardBody>
-                  </Card>
+                        <p className="service-description">
+                          {service.description}
+                        </p>
+                        <div className="service-footer">
+                          <div className="service-status">
+                            {service.isActive ? (
+                              <Badge color="success" className="status-badge">
+                                <i className="fas fa-check-circle me-1"></i>
+                                Đang hoạt động
+                              </Badge>
+                            ) : (
+                              <Badge color="secondary" className="status-badge">
+                                <i className="fas fa-pause-circle me-1"></i>
+                                Tạm dừng
+                              </Badge>
+                            )}
+                          </div>
+                          <Button
+                            color="primary"
+                            size="sm"
+                            className="book-btn"
+                            disabled={!service.isActive}
+                            onClick={e => { e.preventDefault(); /* prevent navigation */ }}
+                          >
+                            <i className="fas fa-calendar-plus me-1"></i>
+                            Đặt ngay
+                          </Button>
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </Link>
                 </Col>
               ))}
             </Row>
