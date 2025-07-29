@@ -1,56 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // Mock data for testing admin functionality
-let mockServices = [
-  {
-    id: 1,
-    title: 'Spa & Wellness Center',
-    description: 'Thư giãn và tái tạo năng lượng với các liệu pháp spa cao cấp',
-    price: 150,
-    image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=400',
-    featured: true
-  },
-  {
-    id: 2,
-    title: 'Fine Dining Restaurant',
-    description: 'Trải nghiệm ẩm thực đẳng cấp quốc tế tại nhà hàng 5 sao',
-    price: 80,
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400',
-    featured: false
-  },
-  {
-    id: 3,
-    title: 'Fitness & Gym',
-    description: 'Phòng gym hiện đại với thiết bị tập luyện chuyên nghiệp',
-    price: 50,
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400',
-    featured: true
-  }
-];
+let mockServices = [];
 
-let mockUsers = [
-  {
-    id: 1,
-    name: 'Admin User',
-    email: 'admin@hotel.com',
-    role: 'Admin',
-    createdAt: '2024-01-15T10:30:00Z'
-  },
-  {
-    id: 2,
-    name: 'John Doe',
-    email: 'john@example.com',
-    role: 'User',
-    createdAt: '2024-02-20T14:20:00Z'
-  },
-  {
-    id: 3,
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    role: 'User',
-    createdAt: '2024-03-10T09:15:00Z'
-  }
-];
+let mockUsers = [];
 
 let mockDashboard = {
   totalServices: 3,
@@ -66,7 +19,7 @@ let nextUserId = 4;
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 // Configuration - set to true to use mock API for admin
-const USE_MOCK_ADMIN_API = true;
+const USE_MOCK_ADMIN_API = false;
 
 console.log(USE_MOCK_ADMIN_API ? '🔧 Using Mock Admin API' : '🌐 Using Real Admin API');
 

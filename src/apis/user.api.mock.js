@@ -1,16 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // Mock data store
-let mockUsers = [
-  {
-    id: 1,
-    firstName: 'Admin',
-    lastName: 'User',
-    email: 'admin@hotel.com',
-    password: '123456',
-    phone: '0123456789'
-  }
-];
+let mockUsers = [];
 
 let nextId = 2;
 

@@ -20,7 +20,8 @@ let nextId = 2;
 // Simulate API delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Configuration - set to true to use mock API
+
+// Luôn sử dụng API thật
 const USE_MOCK_API = false;
 
 console.log(USE_MOCK_API ? '🔧 Using Mock API for user operations' : '🌐 Using Real API for user operations');

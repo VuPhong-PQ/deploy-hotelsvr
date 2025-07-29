@@ -306,6 +306,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\c20f19d1-e617-4615-804e-86ddeb458d88.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\c3cd085d-88dc-4ae6-9f38-f39dc4ab349b.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>HotelServiceAPI</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/HotelServiceAPI</BasePath>
+      <RelativePath>uploads/images/c3cd085d-88dc-4ae6-9f38-f39dc4ab349b.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>vuiasblc7v</Fingerprint>
+      <Integrity>CYqr3AhEk3aNUTyA6I8iudGQIg7rJZcN+/+3Nb6TK4E=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\c3cd085d-88dc-4ae6-9f38-f39dc4ab349b.png'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\e9669ff0-be9a-46e4-9f97-676ab7337a3f.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>HotelServiceAPI</SourceId>

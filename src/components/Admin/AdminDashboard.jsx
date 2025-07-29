@@ -68,7 +68,7 @@ const AdminDashboard = () => {
 
   const DashboardOverview = () => (
     <Row className="dashboard-cards">
-      <Col md="3" sm="6" className="mb-4">
+      <Col md="4" sm="6" className="mb-4">
         <Card className="dashboard-card">
           <CardBody className="text-center">
             <div className="card-icon">
@@ -81,7 +81,7 @@ const AdminDashboard = () => {
           </CardBody>
         </Card>
       </Col>
-      <Col md="3" sm="6" className="mb-4">
+      <Col md="4" sm="6" className="mb-4">
         <Card className="dashboard-card">
           <CardBody className="text-center">
             <div className="card-icon">
@@ -94,7 +94,7 @@ const AdminDashboard = () => {
           </CardBody>
         </Card>
       </Col>
-      <Col md="3" sm="6" className="mb-4">
+      <Col md="4" sm="6" className="mb-4">
         <Card className="dashboard-card">
           <CardBody className="text-center">
             <div className="card-icon">
@@ -104,19 +104,6 @@ const AdminDashboard = () => {
               {dashboardData?.totalBlogs || 0}
             </div>
             <div className="card-title">Bài viết</div>
-          </CardBody>
-        </Card>
-      </Col>
-      <Col md="3" sm="6" className="mb-4">
-        <Card className="dashboard-card">
-          <CardBody className="text-center">
-            <div className="card-icon">
-              <i className="fas fa-calendar-check"></i>
-            </div>
-            <div className="card-number">
-              {dashboardData?.totalBookings || 0}
-            </div>
-            <div className="card-title">Đặt phòng</div>
           </CardBody>
         </Card>
       </Col>
