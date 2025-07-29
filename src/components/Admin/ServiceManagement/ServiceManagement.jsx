@@ -16,7 +16,8 @@ import {
   Badge,
   ButtonGroup
 } from 'reactstrap';
-import { 
+
+import {
   useGetAllServicesAdmin,
   useCreateService,
   useUpdateService,
@@ -25,6 +26,7 @@ import {
   useImportServices,
   useDownloadTemplate
 } from '../../../apis/admin.api';
+import { useUploadImage } from '../../../apis/upload.api';
 
 const ServiceManagement = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -42,6 +44,7 @@ const ServiceManagement = () => {
   const [showImportModal, setShowImportModal] = useState(false);
   const [alerts, setAlerts] = useState([]);
   const fileInputRef = useRef(null);
+  const uploadImageMutation = useUploadImage();
 
   // Queries và Mutations
   const { data: services, isLoading, error, refetch } = useGetAllServicesAdmin();
@@ -66,6 +69,23 @@ const ServiceManagement = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
+  };
+
+  // Xử lý upload ảnh
+  const handleImageFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const result = await uploadImageMutation.mutateAsync(file);
+      if (result && result.url) {
+        setFormData(prev => ({ ...prev, imageUrl: result.url }));
+        addAlert('Upload ảnh thành công!');
+      } else {
+        addAlert('Upload ảnh thất bại!', 'error');
+      }
+    } catch (err) {
+      addAlert(err.message || 'Có lỗi khi upload ảnh!', 'error');
+    }
   };
 
   const openModal = (service = null) => {
@@ -348,18 +368,18 @@ const ServiceManagement = () => {
                 </td>
                 <td>
                   {service.imageUrl ? (
-                    <img 
-                      src={service.imageUrl} 
+                    <img
+                      src={service.imageUrl + (service.updatedAt ? `?v=${new Date(service.updatedAt).getTime()}` : '')}
                       alt={service.name}
                       className="service-image"
                       onError={(e) => {
                         e.target.style.display = 'none';
-                        e.target.nextSibling.style.display = 'flex';
+                        if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
                       }}
                     />
                   ) : null}
-                  <div 
-                    className="icon-placeholder" 
+                  <div
+                    className="icon-placeholder"
                     style={service.imageUrl ? { display: 'none' } : {}}
                   >
                     <i className={service.icon || 'fas fa-concierge-bell'}></i>
@@ -525,15 +545,43 @@ const ServiceManagement = () => {
               />
             </FormGroup>
             <FormGroup className="admin-form-group">
-              <Label className="admin-form-label">URL hình ảnh</Label>
-              <Input
-                type="url"
-                name="imageUrl"
-                value={formData.imageUrl}
-                onChange={handleInputChange}
-                className="admin-form-control"
-                placeholder="https://example.com/image.jpg"
-              />
+              <Label className="admin-form-label">Ảnh dịch vụ</Label>
+              <div
+                onDrop={async (e) => {
+                  e.preventDefault();
+                  const file = e.dataTransfer.files[0];
+                  if (file) await handleImageFileChange({ target: { files: [file] } });
+                }}
+                onDragOver={e => e.preventDefault()}
+                style={{
+                  border: '2px dashed #aaa',
+                  borderRadius: 6,
+                  padding: 16,
+                  textAlign: 'center',
+                  background: '#fafbfc',
+                  cursor: 'pointer',
+                  marginBottom: 8
+                }}
+                title="Kéo thả ảnh vào đây hoặc bấm để chọn ảnh"
+                onClick={() => document.getElementById('service-image-upload').click()}
+              >
+                <input
+                  id="service-image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageFileChange}
+                  style={{ display: 'none' }}
+                />
+                {uploadImageMutation.isLoading ? (
+                  <div style={{ color: '#888', fontSize: 13 }}>Đang upload ảnh...</div>
+                ) : formData.imageUrl ? (
+                  <img src={formData.imageUrl} alt="Preview" style={{ maxWidth: 160, maxHeight: 100, borderRadius: 4, border: '1px solid #eee', margin: '0 auto' }} />
+                ) : (
+                  <div style={{ color: '#888' }}>
+                    Kéo thả ảnh vào đây hoặc <span style={{ color: '#007bff', textDecoration: 'underline' }}>bấm để chọn ảnh</span>
+                  </div>
+                )}
+              </div>
             </FormGroup>
             <FormGroup check className="admin-form-group">
               <Label check className="admin-form-label">
