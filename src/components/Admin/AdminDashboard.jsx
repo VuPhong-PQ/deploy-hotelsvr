@@ -75,7 +75,7 @@ const AdminDashboard = () => {
               <i className="fas fa-users"></i>
             </div>
             <div className="card-number">
-              {dashboardData?.totalUsers || 0}
+              {dashboardData?.stats?.totalUsers || 0}
             </div>
             <div className="card-title">Người dùng</div>
           </CardBody>
@@ -88,7 +88,7 @@ const AdminDashboard = () => {
               <i className="fas fa-concierge-bell"></i>
             </div>
             <div className="card-number">
-              {dashboardData?.totalServices || 0}
+              {dashboardData?.stats?.totalServices || 0}
             </div>
             <div className="card-title">Dịch vụ</div>
           </CardBody>
@@ -101,7 +101,7 @@ const AdminDashboard = () => {
               <i className="fas fa-blog"></i>
             </div>
             <div className="card-number">
-              {dashboardData?.totalBlogs || 0}
+              {dashboardData?.stats?.totalBlogs || 0}
             </div>
             <div className="card-title">Bài viết</div>
           </CardBody>
