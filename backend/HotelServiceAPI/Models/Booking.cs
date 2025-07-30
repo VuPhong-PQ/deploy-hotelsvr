@@ -7,8 +7,7 @@ namespace HotelServiceAPI.Models
     {
         public int Id { get; set; }
         
-        [Required]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         
         [Required]
         public int ServiceId { get; set; }
@@ -30,7 +29,7 @@ namespace HotelServiceAPI.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         
         // Navigation properties
-        public User User { get; set; } = null!;
-        public Service Service { get; set; } = null!;
+        public User? User { get; set; }
+        public Service? Service { get; set; }
     }
 }
