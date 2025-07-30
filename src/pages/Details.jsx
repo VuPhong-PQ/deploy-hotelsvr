@@ -70,7 +70,7 @@ const Details = () => {
               </div>
             </Col>
             <Col lg="7" className="mt-5">
-              <div className="booking-info mt-5">
+              <div className="booking-info mt-5" id="booking-form">
                 <h5 className="mb-4 fw-bold ">Booking Information</h5>
                 <BookingForm />
               </div>

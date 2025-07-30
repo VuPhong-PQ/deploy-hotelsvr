@@ -180,7 +180,10 @@ const Services = () => {
                               size="sm"
                               className="book-btn"
                               disabled={!service.isActive}
-                              onClick={e => { e.preventDefault(); /* prevent navigation */ }}
+                              onClick={e => {
+                                e.preventDefault();
+                                window.location.href = `/services/${service.id}#booking-form`;
+                              }}
                             >
                               <i className="fas fa-calendar-plus me-1"></i>
                               Đặt ngay
