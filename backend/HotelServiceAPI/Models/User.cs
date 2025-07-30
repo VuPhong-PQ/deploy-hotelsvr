@@ -34,7 +34,7 @@ namespace HotelServiceAPI.Models
         public string FullName => $"{FirstName} {LastName}";
         
         // Navigation properties
-        public virtual ICollection<Blog> Blogs { get; set; } = new List<Blog>();
+        public virtual ICollection<Blog> Blogs { get; set; } = new List<Blog>(); // Sẽ cấu hình lại trong DbContext
         public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         // public virtual ICollection<Service> CreatedServices { get; set; } = new List<Service>(); // Tạm thời comment
     }

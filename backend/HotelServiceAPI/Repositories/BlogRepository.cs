@@ -6,9 +6,9 @@ namespace HotelServiceAPI.Repositories
 {
     public class BlogRepository : IBlogRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly HotelDbContext _context;
 
-        public BlogRepository(ApplicationDbContext context)
+        public BlogRepository(HotelDbContext context)
         {
             _context = context;
         }

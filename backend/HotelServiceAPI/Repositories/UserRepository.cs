@@ -7,9 +7,9 @@ namespace HotelServiceAPI.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly HotelDbContext _context;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(HotelDbContext context)
         {
             _context = context;
         }

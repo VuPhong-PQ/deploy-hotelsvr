@@ -14,14 +14,14 @@ namespace HotelServiceAPI.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly HotelDbContext _context;
         private readonly IServiceRepository _serviceRepository;
         private readonly IUserRepository _userRepository;
         private readonly IBlogRepository _blogRepository;
         private readonly IExcelService _excelService;
 
         public AdminController(
-            ApplicationDbContext context,
+            HotelDbContext context,
             IServiceRepository serviceRepository,
             IUserRepository userRepository,
             IBlogRepository blogRepository,

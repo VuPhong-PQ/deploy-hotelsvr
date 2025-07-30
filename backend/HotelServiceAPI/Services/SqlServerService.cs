@@ -21,9 +21,9 @@ namespace HotelServiceAPI.Services
 
     public class SqlServerService : ISqlServerService
     {
-        private readonly ApplicationDbContext _context;
+        private readonly HotelDbContext _context;
 
-        public SqlServerService(ApplicationDbContext context)
+        public SqlServerService(HotelDbContext context)
         {
             _context = context;
         }

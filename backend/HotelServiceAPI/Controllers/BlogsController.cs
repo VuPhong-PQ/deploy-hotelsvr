@@ -77,7 +77,7 @@ namespace HotelServiceAPI.Controllers
 
                 // THÊM: Validate AuthorId exists
                 using var scope = HttpContext.RequestServices.CreateScope();
-                var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var context = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
                 
                 var userExists = await context.Users.AnyAsync(u => u.Id == request.AuthorId);
                 if (!userExists)

@@ -9,9 +9,9 @@ namespace HotelServiceAPI.Controllers
     [ApiController]
     public class DebugController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly HotelDbContext _context;
 
-        public DebugController(ApplicationDbContext context)
+        public DebugController(HotelDbContext context)
         {
             _context = context;
         }

@@ -12,12 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
-// Entity Framework
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-// Đăng ký HotelDbContext cho migration và API
+// Đăng ký HotelDbContext cho migration và API (chỉ dùng 1 context)
 builder.Services.AddDbContext<HotelDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -117,90 +112,11 @@ using (var scope = app.Services.CreateScope())
 {
     try
     {
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        
+        var context = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
         Console.WriteLine("🔄 Migrating database...");
         context.Database.Migrate();
-        
-        // Seed data
-        if (!context.Users.Any())
-        {
-            Console.WriteLine("🌱 Seeding data...");
-            
-            var user = new User
-            {
-                FirstName = "Admin",
-                LastName = "User",
-                Email = "admin@hotel.com",
-                Password = BCrypt.Net.BCrypt.HashPassword("admin123"),
-                Role = "Admin",
-                CreatedAt = DateTime.UtcNow
-            };
-            context.Users.Add(user);
-            context.SaveChanges();
-
-            var blog = new Blog
-            {
-                Title = "Welcome to Our Hotel",
-                Content = "This is our first blog post about luxury hotel services.",
-                ImageUrl = "/images/hotel1.jpg",
-                Quote = "Luxury and comfort in every stay",
-                AuthorId = user.Id,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
-            context.Blogs.Add(blog);
-
-            var blog2 = new Blog
-            {
-                Title = "Hotel Excellence",
-                Content = "Our commitment to providing exceptional service and comfort.",
-                ImageUrl = "/images/hotel2.jpg",
-                Quote = "Excellence in hospitality",
-                AuthorId = user.Id,
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
-            };
-            context.Blogs.Add(blog2);
-
-            // Skip Services seeding for now to avoid foreign key issues
-            // var service = new Service
-            // {
-            //     Name = "Room Cleaning",
-            //     Description = "Professional room cleaning service",
-            //     ImageUrl = "/images/cleaning.jpg",
-            //     Icon = "fa-broom",
-            //     Category = "Cleaning",
-            //     Price = 50.00m,
-            //     CreatedBy = user.Id,
-            //     IsActive = true,
-            //     CreatedAt = DateTime.UtcNow,
-            //     UpdatedAt = DateTime.UtcNow
-            // };
-            // context.Services.Add(service);
-
-            // var service2 = new Service
-            // {
-            //     Name = "Laundry Service",
-            //     Description = "Professional laundry and dry cleaning",
-            //     ImageUrl = "/images/laundry.jpg",
-            //     Icon = "fa-tshirt",
-            //     Category = "Laundry",
-            //     Price = 25.00m,
-            //     CreatedBy = user.Id,
-            //     IsActive = true,
-            //     CreatedAt = DateTime.UtcNow,
-            //     UpdatedAt = DateTime.UtcNow
-            // };
-            // context.Services.Add(service2);
-
-            context.SaveChanges();
-            Console.WriteLine("✅ Data seeded successfully!");
-        }
-        else
-        {
-            Console.WriteLine("ℹ️ Database already has data, skipping seed.");
-        }
+        // Seed admin user only
+        context.SeedAdminUser();
     }
     catch (Exception ex)
     {
