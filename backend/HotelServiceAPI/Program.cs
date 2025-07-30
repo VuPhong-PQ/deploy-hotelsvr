@@ -19,7 +19,7 @@ builder.Services.AddDbContext<HotelDbContext>(options =>
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
-// builder.Services.AddScoped<ICommentRepository, CommentRepository>(); // DISABLED - TABLE REMOVED
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();
 

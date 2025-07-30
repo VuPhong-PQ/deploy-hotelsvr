@@ -88,8 +88,26 @@ namespace HotelServiceAPI.Data
                       .OnDelete(DeleteBehavior.SetNull);
             });
 
-            // (Optional) Comment configuration nếu cần
-            // ...
+            // Comment configuration
+            modelBuilder.Entity<Comment>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Content).IsRequired().HasMaxLength(1000);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                entity.Property(e => e.GuestName).HasMaxLength(100);
+                entity.Property(e => e.GuestEmail).HasMaxLength(100);
+                // Blog relationship (required)
+                entity.HasOne(e => e.Blog)
+                      .WithMany()
+                      .HasForeignKey(e => e.BlogId)
+                      .OnDelete(DeleteBehavior.Cascade);
+                // User relationship (optional)
+                entity.HasOne(e => e.User)
+                      .WithMany(u => u.Comments)
+                      .HasForeignKey(e => e.UserId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
         }
 
         // Seed admin user
