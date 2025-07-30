@@ -15,6 +15,7 @@ namespace HotelServiceAPI.Data
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<ContactMessage> ContactMessages { get; set; }
 
         // Fix: Removed references to non-existent 'Brand' property in the Service entity configuration.  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -107,6 +108,16 @@ namespace HotelServiceAPI.Data
                       .WithMany(u => u.Comments)
                       .HasForeignKey(e => e.UserId)
                       .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            // ContactMessage configuration
+            modelBuilder.Entity<ContactMessage>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Email).IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Message).IsRequired().HasMaxLength(2000);
+                entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
         }
 

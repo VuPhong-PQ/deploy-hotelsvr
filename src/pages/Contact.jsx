@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Form, FormGroup, Input } from "reactstrap";
+import { sendContactMessage } from "../apis/contact.api";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/CommonSection";
 
@@ -26,6 +27,30 @@ const socialLinks = [
 ];
 
 const Contact = () => {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setSuccess(null);
+    setError(null);
+    try {
+      await sendContactMessage(form);
+      setSuccess("Your message has been sent!");
+      setForm({ name: "", email: "", message: "" });
+    } catch (err) {
+      setError("Failed to send message. Please try again.");
+    }
+    setSubmitting(false);
+  };
+
   return (
     <Helmet title="Contact">
       <CommonSection title="Contact" />
@@ -35,23 +60,42 @@ const Contact = () => {
             <Col lg="7" md="7">
               <h6 className="fw-bold mb-4">Get In Touch</h6>
 
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <FormGroup className="contact__form">
-                  <Input placeholder="Your Name" type="text" />
+                  <Input
+                    placeholder="Your Name"
+                    type="text"
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                    required
+                  />
                 </FormGroup>
                 <FormGroup className="contact__form">
-                  <Input placeholder="Email" type="email" />
+                  <Input
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
                 </FormGroup>
                 <FormGroup className="contact__form">
                   <textarea
                     rows="5"
                     placeholder="Message"
                     className="textarea"
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
+                    required
                   ></textarea>
                 </FormGroup>
-
-                <button className=" contact__btn" type="submit">
-                  Send Message
+                {success && <div className="alert alert-success">{success}</div>}
+                {error && <div className="alert alert-danger">{error}</div>}
+                <button className="contact__btn" type="submit" disabled={submitting}>
+                  {submitting ? "Sending..." : "Send Message"}
                 </button>
               </Form>
             </Col>

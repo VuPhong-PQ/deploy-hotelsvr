@@ -19,6 +19,7 @@ import ServiceManagement from './ServiceManagement/ServiceManagement';
 import BlogManagement from './BlogManagement/BlogManagement';
 import AdminDebug from './AdminDebug';
 import AdminLogin from './AdminLogin';
+import AdminContactMessages from './AdminContactMessages';
 import '../../styles/admin.css';
 
 const AdminDashboard = () => {
@@ -169,6 +170,15 @@ const AdminDashboard = () => {
           </NavItem>
           <NavItem>
             <NavLink
+              className={activeTab === 'contacts' ? 'active' : ''}
+              onClick={() => toggleTab('contacts')}
+            >
+              <i className="fas fa-envelope me-2"></i>
+              Quản lý liên hệ
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
               className={activeTab === 'debug' ? 'active' : ''}
               onClick={() => toggleTab('debug')}
             >
@@ -176,7 +186,6 @@ const AdminDashboard = () => {
               Debug
             </NavLink>
           </NavItem>
-          
           <NavItem>
             <NavLink
               className={activeTab === 'login' ? 'active' : ''}
@@ -206,6 +215,9 @@ const AdminDashboard = () => {
             </TabPane>
             <TabPane tabId="blogs">
               <BlogManagement />
+            </TabPane>
+            <TabPane tabId="contacts">
+              <AdminContactMessages />
             </TabPane>
             <TabPane tabId="debug">
               <AdminDebug />
