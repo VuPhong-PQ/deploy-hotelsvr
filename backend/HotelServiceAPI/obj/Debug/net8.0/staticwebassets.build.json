@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BxXUstLAOr8IjbjHyxESxYigkDh9OtOx5TFQJvu2XDA=",
+  "Hash": "9HPD6kuKfGRvAgBrDAuQr4i40SVS9VOeTC20fVY00Ks=",
   "Source": "HotelServiceAPI",
   "BasePath": "_content/HotelServiceAPI",
   "Mode": "Default",
@@ -183,6 +183,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\images\\1546af74-d7a0-46d1-a08b-f0dc92ba40c2.jpg"
+    },
+    {
+      "Identity": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\1f60572c-c040-4cae-be18-38c5f5278474.png",
+      "SourceId": "HotelServiceAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\",
+      "BasePath": "_content/HotelServiceAPI",
+      "RelativePath": "uploads/images/1f60572c-c040-4cae-be18-38c5f5278474#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "jg9g1yo5v4",
+      "Integrity": "HUPRtY9ILGKKfywjvLn3VbhWtvxDJnf/+E2Yh7cZ5H8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\images\\1f60572c-c040-4cae-be18-38c5f5278474.png"
     },
     {
       "Identity": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\2174b5db-77bd-4ef2-a5f8-f842b067f62e.jpg",
@@ -666,6 +687,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\images\\e9669ff0-be9a-46e4-9f97-676ab7337a3f.jpg"
+    },
+    {
+      "Identity": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\ef078a2f-9e84-4d64-8836-a7f4d6cca434.png",
+      "SourceId": "HotelServiceAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\",
+      "BasePath": "_content/HotelServiceAPI",
+      "RelativePath": "uploads/images/ef078a2f-9e84-4d64-8836-a7f4d6cca434#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "3r8csugdy8",
+      "Integrity": "sTR+RkmgbzjlFKY2j0B9QvP1rNXIoXtW0Jk/fKNnkGM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\images\\ef078a2f-9e84-4d64-8836-a7f4d6cca434.png"
     },
     {
       "Identity": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\fba09f2a-6233-4287-aab2-7fff965d78a4.jpg",
@@ -1364,6 +1406,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-rFr3a9C/reBPCM3Bjz18fPlkYWhirDRbkpMip2igyjk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/images/1f60572c-c040-4cae-be18-38c5f5278474.jg9g1yo5v4.png",
+      "AssetFile": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\1f60572c-c040-4cae-be18-38c5f5278474.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2407873"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HUPRtY9ILGKKfywjvLn3VbhWtvxDJnf/+E2Yh7cZ5H8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 31 Jul 2025 05:40:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jg9g1yo5v4"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/images/1f60572c-c040-4cae-be18-38c5f5278474.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-HUPRtY9ILGKKfywjvLn3VbhWtvxDJnf/+E2Yh7cZ5H8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/images/1f60572c-c040-4cae-be18-38c5f5278474.png",
+      "AssetFile": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\1f60572c-c040-4cae-be18-38c5f5278474.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2407873"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"HUPRtY9ILGKKfywjvLn3VbhWtvxDJnf/+E2Yh7cZ5H8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 31 Jul 2025 05:40:48 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-HUPRtY9ILGKKfywjvLn3VbhWtvxDJnf/+E2Yh7cZ5H8="
         }
       ]
     },
@@ -3250,6 +3374,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-QgLJYd5oNda4b87GDhSEWLIlgd2nWT0eFmS9KgcPV2U="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/images/ef078a2f-9e84-4d64-8836-a7f4d6cca434.3r8csugdy8.png",
+      "AssetFile": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\ef078a2f-9e84-4d64-8836-a7f4d6cca434.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4299202"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sTR+RkmgbzjlFKY2j0B9QvP1rNXIoXtW0Jk/fKNnkGM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 31 Jul 2025 05:39:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3r8csugdy8"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/images/ef078a2f-9e84-4d64-8836-a7f4d6cca434.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sTR+RkmgbzjlFKY2j0B9QvP1rNXIoXtW0Jk/fKNnkGM="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/images/ef078a2f-9e84-4d64-8836-a7f4d6cca434.png",
+      "AssetFile": "D:\\laptrinh\\DoAnFull\\DoAn-HotelServices\\backend\\HotelServiceAPI\\wwwroot\\uploads\\images\\ef078a2f-9e84-4d64-8836-a7f4d6cca434.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4299202"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sTR+RkmgbzjlFKY2j0B9QvP1rNXIoXtW0Jk/fKNnkGM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 31 Jul 2025 05:39:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sTR+RkmgbzjlFKY2j0B9QvP1rNXIoXtW0Jk/fKNnkGM="
         }
       ]
     },
