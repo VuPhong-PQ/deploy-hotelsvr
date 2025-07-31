@@ -152,6 +152,15 @@ const AdminDashboard = () => {
           </NavItem>
           <NavItem>
             <NavLink
+              className={activeTab === 'bookings' ? 'active' : ''}
+              onClick={() => toggleTab('bookings')}
+            >
+              <i className="fas fa-calendar-check me-2"></i>
+              Quản lý booking
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink
               className={activeTab === 'services' ? 'active' : ''}
               onClick={() => toggleTab('services')}
             >
@@ -209,6 +218,10 @@ const AdminDashboard = () => {
             </TabPane>
             <TabPane tabId="users">
               <UserManagement />
+            </TabPane>
+            <TabPane tabId="bookings">
+              {/* Trang quản lý booking */}
+              {React.createElement(require('./AdminBookingManagement').default)}
             </TabPane>
             <TabPane tabId="services">
               <ServiceManagement />
