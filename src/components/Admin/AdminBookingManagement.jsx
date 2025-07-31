@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchBookings, deleteBooking } from "../../apis/admin.booking.api";
+import { fetchBookings, deleteBooking, updateBooking } from "../../apis/admin.booking.api";
 import {
   Table,
   Input,
@@ -9,6 +9,13 @@ import {
   PaginationLink,
   Spinner,
   Alert,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Form,
+  FormGroup,
+  Label,
 } from "reactstrap";
 
 const PAGE_SIZE = 10;
@@ -21,6 +28,35 @@ const AdminBookingManagement = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [deletingId, setDeletingId] = useState(null);
+  const [editModal, setEditModal] = useState(false);
+  const [editData, setEditData] = useState(null);
+  const [saving, setSaving] = useState(false);
+  const openEditModal = (booking) => {
+    setEditData({ ...booking });
+    setEditModal(true);
+  };
+
+  const closeEditModal = () => {
+    setEditModal(false);
+    setEditData(null);
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleEditSave = async () => {
+    setSaving(true);
+    try {
+      await updateBooking(editData.id, editData);
+      closeEditModal();
+      loadData();
+    } catch (err) {
+      alert(err?.response?.data?.message || err.message || "Lỗi cập nhật booking");
+    }
+    setSaving(false);
+  };
   const handleDelete = async (id) => {
     if (!window.confirm("Bạn có chắc chắn muốn xóa booking này?")) return;
     setDeletingId(id);
@@ -124,7 +160,49 @@ const AdminBookingManagement = () => {
                     <td>{b.paymentStatus}</td>
                     <td>{b.notes}</td>
                     <td>
-                      <Button color="warning" size="sm" className="me-2" onClick={() => alert('Chức năng đang phát triển')}>Sửa</Button>
+                      <Button color="warning" size="sm" className="me-2" onClick={() => openEditModal(b)}>Sửa</Button>
+      {/* Modal chỉnh sửa booking */}
+      <Modal isOpen={editModal} toggle={closeEditModal}>
+        <ModalHeader toggle={closeEditModal}>Chỉnh sửa Booking</ModalHeader>
+        <ModalBody>
+          {editData && (
+            <Form>
+              <FormGroup>
+                <Label>Trạng thái</Label>
+                <Input type="text" name="status" value={editData.status || ''} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Loại thanh toán</Label>
+                <Input type="select" name="paymentMethod" value={editData.paymentMethod || ''} onChange={handleEditChange}>
+                  <option value="Cash">Cash</option>
+                  <option value="CreditCard">CreditCard</option>
+                  <option value="Momo">Momo</option>
+                  <option value="Zalo">Zalo</option>
+                  <option value="BankTransfer">Bank Transfer</option>
+                  <option value="Paypal">Paypal</option>
+                  <option value="PayToRoom">Pay to room</option>
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label>Trạng thái thanh toán</Label>
+                <Input type="select" name="paymentStatus" value={editData.paymentStatus || ''} onChange={handleEditChange}>
+                  <option value="Unpaid">Unpaid</option>
+                  <option value="Paid">Paid</option>
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label>Ghi chú</Label>
+                <Input type="text" name="notes" value={editData.notes || ''} onChange={handleEditChange} />
+              </FormGroup>
+              {/* Có thể bổ sung các trường khác nếu cần */}
+            </Form>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={closeEditModal} disabled={saving}>Hủy</Button>
+          <Button color="primary" onClick={handleEditSave} disabled={saving}>{saving ? <Spinner size="sm" /> : 'Lưu'}</Button>
+        </ModalFooter>
+      </Modal>
                       <Button color="danger" size="sm" disabled={deletingId === b.id} onClick={() => handleDelete(b.id)}>
                         {deletingId === b.id ? <Spinner size="sm" /> : "Xóa"}
                       </Button>

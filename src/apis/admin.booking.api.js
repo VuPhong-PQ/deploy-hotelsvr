@@ -14,4 +14,8 @@ export const fetchBookings = async ({ search = '', page = 1, pageSize = 10 } = {
 export const deleteBooking = async (id) => {
   return axios.delete(`${API_URL}/${id}`);
 };
-// Có thể bổ sung các API khác như: getBookingById, updateBooking nếu cần
+
+export const updateBooking = async (id, data) => {
+  return axios.put(`${API_URL}/${id}`, data);
+};
+// Có thể bổ sung các API khác như: getBookingById nếu cần

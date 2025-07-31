@@ -42,6 +42,24 @@ namespace HotelServiceAPI.Controllers
             return Ok(new { total, bookings });
         }
 
+        // PUT: api/admin/bookings/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Booking update)
+        {
+            var booking = await _context.Bookings.FindAsync(id);
+            if (booking == null) return NotFound();
+
+            // Cập nhật các trường cho phép sửa
+            booking.Status = update.Status;
+            booking.PaymentMethod = update.PaymentMethod;
+            booking.PaymentStatus = update.PaymentStatus;
+            booking.Notes = update.Notes;
+            // Có thể bổ sung các trường khác nếu cần
+
+            await _context.SaveChangesAsync();
+            return Ok(new { success = true });
+        }
+
         // DELETE: api/admin/bookings/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
