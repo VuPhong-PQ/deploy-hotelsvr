@@ -168,8 +168,35 @@ const AdminBookingManagement = () => {
           {editData && (
             <Form>
               <FormGroup>
+                <Label>Khách hàng (UserId)</Label>
+                <Input type="number" name="userId" value={editData.userId || ''} onChange={handleEditChange} min={1} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Dịch vụ (ServiceId)</Label>
+                <Input type="number" name="serviceId" value={editData.serviceId || ''} onChange={handleEditChange} min={1} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Ngày đặt</Label>
+                <Input type="datetime-local" name="bookingDate" value={editData.bookingDate ? new Date(editData.bookingDate).toISOString().slice(0,16) : ''} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Ngày sử dụng</Label>
+                <Input type="date" name="serviceDate" value={editData.serviceDate ? new Date(editData.serviceDate).toISOString().slice(0,10) : ''} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Số người</Label>
+                <Input type="number" name="numberOfPeople" value={editData.numberOfPeople || 1} min={1} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Tổng tiền</Label>
+                <Input type="number" name="totalAmount" value={editData.totalAmount || 0} min={0} step={1000} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
                 <Label>Trạng thái</Label>
-                <Input type="text" name="status" value={editData.status || ''} onChange={handleEditChange} />
+                <Input type="select" name="status" value={editData.status || ''} onChange={handleEditChange}>
+                  <option value="Pending">Pending</option>
+                  <option value="Done">Done</option>
+                </Input>
               </FormGroup>
               <FormGroup>
                 <Label>Loại thanh toán</Label>
@@ -194,7 +221,6 @@ const AdminBookingManagement = () => {
                 <Label>Ghi chú</Label>
                 <Input type="text" name="notes" value={editData.notes || ''} onChange={handleEditChange} />
               </FormGroup>
-              {/* Có thể bổ sung các trường khác nếu cần */}
             </Form>
           )}
         </ModalBody>

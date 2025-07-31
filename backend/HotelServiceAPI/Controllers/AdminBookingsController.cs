@@ -54,6 +54,7 @@ namespace HotelServiceAPI.Controllers
             booking.PaymentMethod = update.PaymentMethod;
             booking.PaymentStatus = update.PaymentStatus;
             booking.Notes = update.Notes;
+            booking.TotalAmount = update.TotalAmount;
             // Có thể bổ sung các trường khác nếu cần
 
             await _context.SaveChangesAsync();
