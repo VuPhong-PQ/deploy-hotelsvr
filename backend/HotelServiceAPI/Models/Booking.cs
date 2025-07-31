@@ -28,6 +28,13 @@ namespace HotelServiceAPI.Models
         
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         
+        // Payment fields
+        [MaxLength(32)]
+        public string PaymentMethod { get; set; } = "Cash"; // Cash, CreditCard, Momo, Zalo, BankTransfer, Paypal, PayToRoom
+
+        [MaxLength(16)]
+        public string PaymentStatus { get; set; } = "Unpaid"; // Unpaid, Paid, ...
+
         // Navigation properties
         public User? User { get; set; }
         public Service? Service { get; set; }
