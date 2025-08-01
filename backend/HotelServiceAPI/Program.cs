@@ -107,7 +107,7 @@ app.UseStaticFiles(new StaticFileOptions
     RequestPath = "/uploads"
 });
 
-// Auto migrate và seed data
+// Auto migrate và seed data (tạo user tự động mỗi khi run API)
 using (var scope = app.Services.CreateScope())
 {
     try

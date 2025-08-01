@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelServiceAPI.Migrations
 {
     [DbContext(typeof(HotelDbContext))]
-    [Migration("20250730152326_AddContactMessage")]
-    partial class AddContactMessage
+    [Migration("20250801080041_RecreateUserTable")]
+    partial class RecreateUserTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,6 +89,16 @@ namespace HotelServiceAPI.Migrations
 
                     b.Property<int>("NumberOfPeople")
                         .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("nvarchar(32)");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<DateTime>("ServiceDate")
                         .HasColumnType("datetime2");

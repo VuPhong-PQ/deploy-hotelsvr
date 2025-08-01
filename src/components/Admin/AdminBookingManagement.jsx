@@ -245,6 +245,11 @@ const AdminBookingManagement = () => {
               <tr>
                 <th>#</th>
                 <th>Khách hàng</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
                 <th>Dịch vụ</th>
                 <th>Ngày đặt</th>
                 <th>Ngày sử dụng</th>
@@ -268,7 +273,12 @@ const AdminBookingManagement = () => {
                 bookings.map((b, idx) => (
                   <tr key={b.id}>
                     <td>{(page - 1) * PAGE_SIZE + idx + 1}</td>
-                    <td>{b.user?.fullName || b.user?.firstName || "Khách vãng lai"}</td>
+                    <td>{b.user?.fullName || b.firstName || "Khách vãng lai"}</td>
+                    <td>{b.firstName || ''}</td>
+                    <td>{b.lastName || ''}</td>
+                    <td>{b.email || ''}</td>
+                    <td>{b.phone || ''}</td>
+                    <td>{b.address || ''}</td>
                     <td>{b.service?.name || b.serviceId}</td>
                     <td>{b.bookingDate ? new Date(b.bookingDate).toLocaleString() : ""}</td>
                     <td>{b.serviceDate ? new Date(b.serviceDate).toLocaleDateString() : ""}</td>
@@ -295,6 +305,26 @@ const AdminBookingManagement = () => {
               <FormGroup>
                 <Label>Khách hàng (UserId)</Label>
                 <Input type="number" name="userId" value={editData.userId || ''} onChange={handleEditChange} min={1} />
+              </FormGroup>
+              <FormGroup>
+                <Label>First Name</Label>
+                <Input type="text" name="firstName" value={editData.firstName || ''} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Last Name</Label>
+                <Input type="text" name="lastName" value={editData.lastName || ''} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Email</Label>
+                <Input type="email" name="email" value={editData.email || ''} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Số điện thoại</Label>
+                <Input type="text" name="phone" value={editData.phone || ''} onChange={handleEditChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Địa chỉ</Label>
+                <Input type="text" name="address" value={editData.address || ''} onChange={handleEditChange} />
               </FormGroup>
               <FormGroup>
                 <Label>Dịch vụ (ServiceId)</Label>

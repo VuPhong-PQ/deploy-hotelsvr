@@ -79,6 +79,12 @@ namespace HotelServiceAPI.Controllers
             existing.PaymentMethod = booking.PaymentMethod;
             existing.PaymentStatus = booking.PaymentStatus;
             existing.Notes = booking.Notes;
+            // Cập nhật các trường thông tin khách hàng
+            existing.FirstName = booking.FirstName;
+            existing.LastName = booking.LastName;
+            existing.Email = booking.Email;
+            existing.Phone = booking.Phone;
+            existing.Address = booking.Address;
             await _context.SaveChangesAsync();
             return Ok(existing);
         }

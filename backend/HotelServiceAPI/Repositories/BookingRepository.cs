@@ -47,9 +47,25 @@ namespace HotelServiceAPI.Repositories
 
         public async Task<Booking> UpdateBookingAsync(Booking booking)
         {
-            _context.Entry(booking).State = EntityState.Modified;
+            var existing = await _context.Bookings.FindAsync(booking.Id);
+            if (existing == null) return booking;
+            existing.UserId = booking.UserId;
+            existing.ServiceId = booking.ServiceId;
+            existing.BookingDate = booking.BookingDate;
+            existing.ServiceDate = booking.ServiceDate;
+            existing.NumberOfPeople = booking.NumberOfPeople;
+            existing.Status = booking.Status;
+            existing.PaymentMethod = booking.PaymentMethod;
+            existing.PaymentStatus = booking.PaymentStatus;
+            existing.Notes = booking.Notes;
+            // Cập nhật các trường thông tin khách hàng
+            existing.FirstName = booking.FirstName;
+            existing.LastName = booking.LastName;
+            existing.Email = booking.Email;
+            existing.Phone = booking.Phone;
+            existing.Address = booking.Address;
             await _context.SaveChangesAsync();
-            return booking;
+            return existing;
         }
 
         public async Task<bool> DeleteBookingAsync(int id)
