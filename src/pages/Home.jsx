@@ -58,7 +58,7 @@ function ServiceCard({ service }) {
               <i className="ri-timer-flash-line"></i> {service.speed}
             </span>
           </div>
-          <Link to={`/booking?serviceId=${service.id}`} className="w-50 services_item-btn services_btn-rent text-center d-inline-block">
+          <Link to={`/services/${service.id}#booking-form`} className="w-50 services_item-btn services_btn-rent text-center d-inline-block">
             Đặt dịch vụ
           </Link>
           <Link to={`/services/${service.id}`} className="w-50 services_item-btn services__btn-details text-center d-inline-block">
