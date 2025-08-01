@@ -15,6 +15,8 @@ import MyBlogs from "../pages/MyBlogs";
 import Services from "../pages/Services";
 import AdminDashboard from "../components/Admin/AdminDashboard";
 
+import Booking from "../pages/Booking";
+
 const Routers = () => {
   return (
     <Routes>
@@ -24,6 +26,7 @@ const Routers = () => {
       <Route path="/services" element={<Services />} />
       <Route path="/listing" element={<Listing />} />
       <Route path="/services/:id" element={<Details />} />
+      <Route path="/booking" element={<Booking />} />
       <Route path="/blogs" element={<Blog />} />
       <Route path="/blogs/:id" element={<BlogDetails />} />
       <Route path="/contact" element={<Contact />} />
