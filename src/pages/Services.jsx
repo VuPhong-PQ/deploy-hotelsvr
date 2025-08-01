@@ -94,10 +94,11 @@ const Services = () => {
             </Col>
             <Col lg="6">
               <div className="hero-image">
-                <img 
-                  src="/images/hotel-services-hero.jpg" 
-                  alt="Hotel Services" 
+                <img
+                  src={require("../assets/all-images/slider-img/toancanh.jpg")}
+                  alt="Hotel Services"
                   className="img-fluid rounded-3 shadow-lg"
+                  style={{objectFit: 'cover', width: '100%', height: '340px'}}
                   onError={(e) => {
                     e.target.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80';
                   }}
