@@ -1,7 +1,10 @@
-using HotelServiceAPI.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using HotelServiceAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using HotelServiceAPI.Data;
+using HotelServiceAPI.Models;
 
 namespace HotelServiceAPI.Controllers
 {
@@ -42,23 +45,42 @@ namespace HotelServiceAPI.Controllers
             return Ok(new { total, bookings });
         }
 
+        // POST: api/admin/bookings
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Booking booking)
+        {
+            if (booking == null)
+                return BadRequest("Booking data is required");
+            // Validate các trường bắt buộc
+            if (booking.ServiceId == 0 || booking.BookingDate == default || booking.ServiceDate == default)
+                return BadRequest("Missing required fields");
+            booking.CreatedAt = DateTime.UtcNow;
+            _context.Bookings.Add(booking);
+            await _context.SaveChangesAsync();
+            return Ok(booking);
+        }
+
         // PUT: api/admin/bookings/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Booking update)
+        public async Task<IActionResult> Update(int id, [FromBody] Booking booking)
         {
-            var booking = await _context.Bookings.FindAsync(id);
-            if (booking == null) return NotFound();
-
-            // Cập nhật các trường cho phép sửa
-            booking.Status = update.Status;
-            booking.PaymentMethod = update.PaymentMethod;
-            booking.PaymentStatus = update.PaymentStatus;
-            booking.Notes = update.Notes;
-            booking.TotalAmount = update.TotalAmount;
-            // Có thể bổ sung các trường khác nếu cần
-
+            if (booking == null || id != booking.Id)
+                return BadRequest("Invalid booking data");
+            var existing = await _context.Bookings.FindAsync(id);
+            if (existing == null)
+                return NotFound();
+            // Cập nhật các trường cần thiết
+            existing.UserId = booking.UserId;
+            existing.ServiceId = booking.ServiceId;
+            existing.BookingDate = booking.BookingDate;
+            existing.ServiceDate = booking.ServiceDate;
+            existing.NumberOfPeople = booking.NumberOfPeople;
+            existing.Status = booking.Status;
+            existing.PaymentMethod = booking.PaymentMethod;
+            existing.PaymentStatus = booking.PaymentStatus;
+            existing.Notes = booking.Notes;
             await _context.SaveChangesAsync();
-            return Ok(new { success = true });
+            return Ok(existing);
         }
 
         // DELETE: api/admin/bookings/{id}
