@@ -253,8 +253,7 @@ const AdminBookingManagement = () => {
                 <th>Dịch vụ</th>
                 <th>Ngày đặt</th>
                 <th>Ngày sử dụng</th>
-                <th>Số người đặt ban đầu</th>
-                <th>Tổng tiền sau khi sửa</th>
+                <th>Số người</th>
                 <th>Tổng tiền đặt ban đầu</th>
                 <th>Trạng thái sd dịch vụ</th>
                 <th>Loại thanh toán</th>
@@ -283,7 +282,6 @@ const AdminBookingManagement = () => {
                     <td>{b.bookingDate ? new Date(b.bookingDate).toLocaleString() : ""}</td>
                     <td>{b.serviceDate ? new Date(b.serviceDate).toLocaleDateString() : ""}</td>
                     <td>{b.numberOfPeople || 1}</td>
-                    <td>{b.totalAmount?.toLocaleString()} đ</td>
                     <td>{(() => {
                       const service = services?.find(s => s.id === Number(b.serviceId));
                       const price = service ? Number(service.price) : 0;
