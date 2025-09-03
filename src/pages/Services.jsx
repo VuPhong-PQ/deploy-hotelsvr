@@ -7,6 +7,23 @@ import '../styles/services.css';
 
 const Services = () => {
   const { data: services, isLoading, error } = useGetAllServices();
+  const [searchText, setSearchText] = React.useState("");
+  const [selectedCategory, setSelectedCategory] = React.useState("");
+  // Lấy danh sách nhóm dịch vụ từ dữ liệu
+  const categories = React.useMemo(() => {
+    if (!services) return [];
+    return Array.from(new Set(services.map(s => s.category).filter(Boolean)));
+  }, [services]);
+
+  // Lọc dịch vụ theo tên và nhóm
+  const filteredServices = React.useMemo(() => {
+    if (!services) return [];
+    return services.filter(s => {
+      const matchName = s.name.toLowerCase().includes(searchText.toLowerCase());
+      const matchCategory = selectedCategory ? s.category === selectedCategory : true;
+      return matchName && matchCategory;
+    });
+  }, [services, searchText, selectedCategory]);
 
   const formatPrice = (price) => {
     return new Intl.NumberFormat('vi-VN', {
@@ -62,6 +79,34 @@ const Services = () => {
 
   return (
     <div className="services-page">
+      {/* Bộ lọc tìm kiếm */}
+      <div className="services-filter py-3">
+        <Container>
+          <Row className="align-items-center">
+            <Col md="6" className="mb-2 mb-md-0">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Tìm kiếm tên dịch vụ..."
+                value={searchText}
+                onChange={e => setSearchText(e.target.value)}
+              />
+            </Col>
+            <Col md="6">
+              <select
+                className="form-select"
+                value={selectedCategory}
+                onChange={e => setSelectedCategory(e.target.value)}
+              >
+                <option value="">Tất cả nhóm dịch vụ</option>
+                {categories.map(cat => (
+                  <option key={cat} value={cat}>{cat}</option>
+                ))}
+              </select>
+            </Col>
+          </Row>
+        </Container>
+      </div>
       {/* Hero Section */}
       <div className="services-hero">
         <Container>
@@ -121,9 +166,9 @@ const Services = () => {
             </Col>
           </Row>
 
-          {services && services.length > 0 ? (
+          {filteredServices && filteredServices.length > 0 ? (
             <Row>
-              {services.map((service, index) => {
+              {filteredServices.map((service, index) => {
                 // Xử lý đường dẫn ảnh: nếu là đường dẫn tuyệt đối (http/https) thì giữ nguyên, nếu là đường dẫn tương đối thì thêm baseURL
                 let imageUrl = service.imageUrl;
                 if (imageUrl && !/^https?:\/\//i.test(imageUrl)) {
@@ -202,9 +247,9 @@ const Services = () => {
               <Col lg="8" className="mx-auto text-center">
                 <div className="empty-state py-5">
                   <i className="fas fa-concierge-bell text-muted" style={{ fontSize: '4rem' }}></i>
-                  <h4 className="mt-3 text-muted">Chưa có dịch vụ nào</h4>
+                  <h4 className="mt-3 text-muted">Không tìm thấy dịch vụ phù hợp</h4>
                   <p className="text-muted">
-                    Hiện tại chưa có dịch vụ nào được thêm vào hệ thống. Vui lòng quay lại sau.
+                    Vui lòng thử lại với từ khóa hoặc nhóm dịch vụ khác.
                   </p>
                 </div>
               </Col>

@@ -270,6 +270,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\79356773-d489-40d6-b46e-0887dc1ba168.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\7cc98d37-1ee8-498f-9e3c-276379c1fedf.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>HotelServiceAPI</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/HotelServiceAPI</BasePath>
+      <RelativePath>uploads/images/7cc98d37-1ee8-498f-9e3c-276379c1fedf.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>a1dbjhd5cb</Fingerprint>
+      <Integrity>QgLJYd5oNda4b87GDhSEWLIlgd2nWT0eFmS9KgcPV2U=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\7cc98d37-1ee8-498f-9e3c-276379c1fedf.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\7eb0bbae-b6e2-4d5b-a324-72681eba6a9c.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>HotelServiceAPI</SourceId>
@@ -468,6 +486,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\a859e1b3-b182-4723-9e23-0e07ab27c2c0.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\b9c5db75-1963-442e-a208-506b8688e8f9.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>HotelServiceAPI</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/HotelServiceAPI</BasePath>
+      <RelativePath>uploads/images/b9c5db75-1963-442e-a208-506b8688e8f9.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>cwmzckezkv</Fingerprint>
+      <Integrity>rFr3a9C/reBPCM3Bjz18fPlkYWhirDRbkpMip2igyjk=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\b9c5db75-1963-442e-a208-506b8688e8f9.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\bf89c11b-7f4b-4949-b0eb-49db92a6021a.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>HotelServiceAPI</SourceId>
@@ -540,6 +576,42 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\cc34e262-a05d-474f-8a8d-cc17e7260b19.png'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\db5b976c-1fda-4e46-9858-a33c423eabcd.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>HotelServiceAPI</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/HotelServiceAPI</BasePath>
+      <RelativePath>uploads/images/db5b976c-1fda-4e46-9858-a33c423eabcd.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>jg9g1yo5v4</Fingerprint>
+      <Integrity>HUPRtY9ILGKKfywjvLn3VbhWtvxDJnf/+E2Yh7cZ5H8=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\db5b976c-1fda-4e46-9858-a33c423eabcd.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\e6036d32-211c-4eda-ab80-5cb0e016604b.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>HotelServiceAPI</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/HotelServiceAPI</BasePath>
+      <RelativePath>uploads/images/e6036d32-211c-4eda-ab80-5cb0e016604b.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>dzuk0ne4nx</Fingerprint>
+      <Integrity>J4rVe9E1EmuHL+xYnnrIiaOuiT7ixLHU2aXbQRSd3fM=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\e6036d32-211c-4eda-ab80-5cb0e016604b.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\e7962392-bd0a-4905-aed4-2d07d0c7e4bc.jpg'))">
       <SourceType>Package</SourceType>
       <SourceId>HotelServiceAPI</SourceId>
@@ -611,6 +683,42 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\ef078a2f-9e84-4d64-8836-a7f4d6cca434.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\f16e9d5c-5115-4dca-b607-6c38b558f7af.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>HotelServiceAPI</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/HotelServiceAPI</BasePath>
+      <RelativePath>uploads/images/f16e9d5c-5115-4dca-b607-6c38b558f7af.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>3r8csugdy8</Fingerprint>
+      <Integrity>sTR+RkmgbzjlFKY2j0B9QvP1rNXIoXtW0Jk/fKNnkGM=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\f16e9d5c-5115-4dca-b607-6c38b558f7af.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\f1c89756-0d97-4508-9b50-68f3607c0898.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>HotelServiceAPI</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/HotelServiceAPI</BasePath>
+      <RelativePath>uploads/images/f1c89756-0d97-4508-9b50-68f3607c0898.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>z7zeoo7ybk</Fingerprint>
+      <Integrity>Me6FBfmN8myIqQic8yzPRMXppqeF41oWOUcXvp1TRiE=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\f1c89756-0d97-4508-9b50-68f3607c0898.jpg'))</OriginalItemSpec>
     </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\uploads\images\fba09f2a-6233-4287-aab2-7fff965d78a4.jpg'))">
       <SourceType>Package</SourceType>
