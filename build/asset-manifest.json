@@ -1,0 +1,39 @@
+{
+  "files": {
+    "main.css": "/DoAn-HotelServices/static/css/main.d55de1cb.css",
+    "main.js": "/DoAn-HotelServices/static/js/main.7530f9d8.js",
+    "static/media/image1.png": "/DoAn-HotelServices/static/media/image1.fec9e7ecefa18ab1e8dc.png",
+    "static/media/image3.png": "/DoAn-HotelServices/static/media/image3.49747d657531d7e3bd61.png",
+    "static/media/image5.png": "/DoAn-HotelServices/static/media/image5.199114ca1806ce436d3f.png",
+    "static/media/image1.jpg": "/DoAn-HotelServices/static/media/image1.dc6786a1a1265075bf45.jpg",
+    "static/media/image4.png": "/DoAn-HotelServices/static/media/image4.5e59b040f9e51d7f8649.png",
+    "static/media/image2.png": "/DoAn-HotelServices/static/media/image2.b165c49002343176413c.png",
+    "static/media/remixicon.svg?t=1590207869815": "/DoAn-HotelServices/static/media/remixicon.9cedd2150922ead84869.svg",
+    "static/media/image7.png": "/DoAn-HotelServices/static/media/image7.5ef7ba4e4db5a2852444.png",
+    "static/media/img2.png": "/DoAn-HotelServices/static/media/img2.5ef7ba4e4db5a2852444.png",
+    "static/media/slider-1.jpg": "/DoAn-HotelServices/static/media/slider-1.02120d19f11916528f64.jpg",
+    "static/media/slider-2.jpg": "/DoAn-HotelServices/static/media/slider-2.6ad7d1c03d61823ceeda.jpg",
+    "static/media/image6.jpg": "/DoAn-HotelServices/static/media/image6.6b428601599a151520db.jpg",
+    "static/media/remixicon.eot?t=1590207869815": "/DoAn-HotelServices/static/media/remixicon.5cb99e6cba5a4619063f.eot",
+    "static/media/remixicon.ttf?t=1590207869815": "/DoAn-HotelServices/static/media/remixicon.f2616f597cf98f38d234.ttf",
+    "static/media/slider-3.jpg": "/DoAn-HotelServices/static/media/slider-3.12920b2aee610a6d8541.jpg",
+    "static/media/img.jpg": "/DoAn-HotelServices/static/media/img.8fcb7b61219653b43b61.jpg",
+    "static/media/toancanh.jpg": "/DoAn-HotelServices/static/media/toancanh.a61b88ff71374bcf867d.jpg",
+    "static/media/remixicon.woff?t=1590207869815": "/DoAn-HotelServices/static/media/remixicon.8d09fa11700ed63cf96e.woff",
+    "static/media/remixicon.woff2?t=1590207869815": "/DoAn-HotelServices/static/media/remixicon.90668f6f9b3c2c18a090.woff2",
+    "static/media/ava-4.jpg": "/DoAn-HotelServices/static/media/ava-4.8fb8c08c3a19af6d9543.jpg",
+    "static/media/ava-1.jpg": "/DoAn-HotelServices/static/media/ava-1.7d48ca305a36ef08d72f.jpg",
+    "static/media/ava-3.jpg": "/DoAn-HotelServices/static/media/ava-3.14ea2a79d9d2febbc55d.jpg",
+    "index.html": "/DoAn-HotelServices/index.html",
+    "static/media/slick.svg": "/DoAn-HotelServices/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/slick.eot": "/DoAn-HotelServices/static/media/slick.a4e97f5a2a64f0ab1323.eot",
+    "static/media/slick.ttf": "/DoAn-HotelServices/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/slick.woff": "/DoAn-HotelServices/static/media/slick.295183786cd8a1389865.woff",
+    "main.d55de1cb.css.map": "/DoAn-HotelServices/static/css/main.d55de1cb.css.map",
+    "main.7530f9d8.js.map": "/DoAn-HotelServices/static/js/main.7530f9d8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d55de1cb.css",
+    "static/js/main.7530f9d8.js"
+  ]
+}
