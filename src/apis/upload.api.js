@@ -1,8 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { BASE_URL } from '../config';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: BASE_URL,
   timeout: 30000, // 30 seconds for file upload
 });
 

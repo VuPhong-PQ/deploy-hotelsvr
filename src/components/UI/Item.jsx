@@ -21,13 +21,13 @@ const Item = (props) => {
 
           <div className="services_item-info d-flex align-items-center justify-content-between mt-3 mb-4">
             <span className=" d-flex align-items-center gap-1">
-            <i class="ri-restaurant-line"></i> {model}
+            <i className="ri-restaurant-line"></i> {model}
             </span>
             <span className=" d-flex align-items-center gap-1">
-            <i class="ri-goblet-fill"></i> {automatic}
+            <i className="ri-goblet-fill"></i> {automatic}
             </span>
             <span className=" d-flex align-items-center gap-1">
-              <i class="ri-timer-flash-line"></i> {speed}
+              <i className="ri-timer-flash-line"></i> {speed}
             </span>
           </div>
 

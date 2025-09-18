@@ -159,4 +159,5 @@ Console.WriteLine("   GET  /api/comments/user/{userId}");
 Console.WriteLine("   GET  /api/comments/debug");
 Console.WriteLine("   GET  /swagger");
 
+app.Urls.Add("http://0.0.0.0:5000");
 app.Run();

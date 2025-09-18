@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Card, CardBody, Badge, Button } from 'reactstrap';
 import { useGetAllServices } from '../apis/service.api';
 import { Link } from 'react-router-dom';
-import config from '../config';
+import { BASE_URL } from '../config';
 import '../styles/services.css';
 
 const Services = () => {
@@ -173,7 +173,7 @@ const Services = () => {
                 // Xử lý đường dẫn ảnh: nếu là đường dẫn tuyệt đối (http/https) thì giữ nguyên, nếu là đường dẫn tương đối thì thêm baseURL
                 let imageUrl = service.imageUrl;
                 if (imageUrl && !/^https?:\/\//i.test(imageUrl)) {
-                  imageUrl = (config.apiBaseUrl?.replace(/\/$/, '') || '') + '/' + imageUrl.replace(/^\//, '');
+                  imageUrl = BASE_URL.replace(/\/api$/, '') + '/' + imageUrl.replace(/^\//, '');
                 }
                 imageUrl = imageUrl ? imageUrl + (service.updatedAt ? `?v=${new Date(service.updatedAt).getTime()}` : '') : 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
                 return (

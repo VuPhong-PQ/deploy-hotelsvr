@@ -59,7 +59,7 @@ const Header = () => {
               <div className="header__top__left">
                 <span>Need Help?</span>
                 <span className="header__top__help">
-                  <i class="ri-phone-fill"></i> +84 2976 279 999
+                  <i className="ri-phone-fill"></i> +84 2976 279 999
                 </span>
               </div>
             </Col>
@@ -105,7 +105,7 @@ const Header = () => {
               <div className="logo">
                 <h1>
                   <Link to="/home" className=" d-flex align-items-center gap-2">
-                  <i class="ri-hotel-fill"></i>
+                  <i className="ri-hotel-fill"></i>
                     <span>
                     Hotel Service <br /> BWP Sonasea Phu Quoc
                     </span>
@@ -117,7 +117,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-earth-line"></i>
+                  <i className="ri-earth-line"></i>
                 </span>
                 <div className="header__location-content">
                   <h4>Duong Bao</h4>
@@ -129,7 +129,7 @@ const Header = () => {
             <Col lg="3" md="3" sm="4">
               <div className="header__location d-flex align-items-center gap-2">
                 <span>
-                  <i class="ri-time-line"></i>
+                  <i className="ri-time-line"></i>
                 </span>
                 <div className="header__location-content">
                   <h4>Every Time You Need</h4>
@@ -146,7 +146,7 @@ const Header = () => {
             >
               <button className="header__btn btn ">
                 <Link to="/contact">
-                  <i class="ri-phone-line"></i> Request a call
+                  <i className="ri-phone-line"></i> Request a call
                 </Link>
               </button>
             </Col>
@@ -160,7 +160,7 @@ const Header = () => {
         <Container>
           <div className="navigation__wrapper d-flex align-items-center justify-content-between">
             <span className="mobile__menu">
-              <i class="ri-menu-line" onClick={toggleMenu}></i>
+              <i className="ri-menu-line" onClick={toggleMenu}></i>
             </span>
 
             <div className="navigation" ref={menuRef} onClick={toggleMenu}>

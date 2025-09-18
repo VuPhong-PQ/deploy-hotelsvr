@@ -1,6 +1,6 @@
-
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { BASE_URL } from '../config';
 
 // Mock data store (tạm thời sử dụng khi backend chưa hoạt động)
 let mockUsers = [
@@ -27,7 +27,7 @@ const USE_MOCK_API = false;
 console.log(USE_MOCK_API ? '🔧 Using Mock API for user operations' : '🌐 Using Real API for user operations');
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

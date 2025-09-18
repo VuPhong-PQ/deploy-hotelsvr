@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/admin/contactmessages';
+import { BASE_URL } from '../config';
+const API_URL = `${BASE_URL}/admin/contactmessages`;
 
 export const fetchContactMessages = async ({ search = '', page = 1, pageSize = 10 } = {}) => {
   const params = {};

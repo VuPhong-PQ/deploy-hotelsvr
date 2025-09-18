@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\laptrinh\\DoAnFull\\HotelServices\\HotelServices\\backend\\HotelServiceAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{00065164-F2B9-4CDB-B05D-C06F96DC2880}|HotelServiceAPI.csproj|d:\\laptrinh\\doanfull\\hotelservices\\hotelservices\\backend\\hotelserviceapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{00065164-F2B9-4CDB-B05D-C06F96DC2880}|HotelServiceAPI.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{00065164-F2B9-4CDB-B05D-C06F96DC2880}|HotelServiceAPI.csproj|d:\\laptrinh\\doanfull\\hotelservices\\hotelservices\\backend\\hotelserviceapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{00065164-F2B9-4CDB-B05D-C06F96DC2880}|HotelServiceAPI.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -18,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -38,26 +42,38 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "HotelServiceAPI",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\laptrinh\\DoAnFull\\HotelServices\\HotelServices\\backend\\HotelServiceAPI\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\laptrinh\\DoAnFull\\HotelServices\\HotelServices\\backend\\HotelServiceAPI\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-07-20T13:42:56.129Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "HotelServiceAPI.csproj",
               "DocumentMoniker": "D:\\laptrinh\\DoAnFull\\HotelServices\\HotelServices\\backend\\HotelServiceAPI\\HotelServiceAPI.csproj",
               "RelativeDocumentMoniker": "HotelServiceAPI.csproj",
               "ToolTip": "D:\\laptrinh\\DoAnFull\\HotelServices\\HotelServices\\backend\\HotelServiceAPI\\HotelServiceAPI.csproj",
               "RelativeToolTip": "HotelServiceAPI.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-20T09:46:04.87Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-20T09:46:04.87Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\laptrinh\\DoAnFull\\HotelServices\\HotelServices\\backend\\HotelServiceAPI\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\laptrinh\\DoAnFull\\HotelServices\\HotelServices\\backend\\HotelServiceAPI\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAAAAQAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAADEAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-20T09:43:34.482Z",
               "EditorCaption": ""

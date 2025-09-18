@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
+import { BASE_URL } from '../config';
 
 // Import mock functions
 import {
@@ -23,7 +24,7 @@ const USE_MOCK_ADMIN_API = false;
 console.log(USE_MOCK_ADMIN_API ? '🔧 Using Mock Admin API' : '🌐 Using Real Admin API');
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: BASE_URL,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

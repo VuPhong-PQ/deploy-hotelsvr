@@ -1,7 +1,8 @@
 
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/admin/bookings';
+import { BASE_URL } from '../config';
+const API_URL = `${BASE_URL}/admin/bookings`;
 
 // Tạo mới booking (dùng axios để đồng bộ với các API khác)
 export async function createBooking(data) {

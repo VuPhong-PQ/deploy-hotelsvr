@@ -27,21 +27,21 @@ const AboutSection = ({ aboutClass }) => {
 
               <div className="about__section-item d-flex align-items-center">
                 <p className="section__description d-flex align-items-center gap-2">
-                  <i class="ri-checkbox-circle-line"></i> Security
+                  <i className="ri-checkbox-circle-line"></i> Security
                 </p>
 
                 <p className="section__description d-flex align-items-center gap-2">
-                  <i class="ri-checkbox-circle-line"></i> Facilities
+                  <i className="ri-checkbox-circle-line"></i> Facilities
                 </p>
               </div>
 
               <div className="about__section-item d-flex align-items-center">
                 <p className="section__description d-flex align-items-center gap-2">
-                  <i class="ri-checkbox-circle-line"></i> Modern progress
+                  <i className="ri-checkbox-circle-line"></i> Modern progress
                 </p>
 
                 <p className="section__description d-flex align-items-center gap-2">
-                  <i class="ri-checkbox-circle-line"></i> Conscientious
+                  <i className="ri-checkbox-circle-line"></i> Conscientious
                 </p>
               </div>
             </div>
