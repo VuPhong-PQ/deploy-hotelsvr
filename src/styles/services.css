@@ -1,3 +1,47 @@
+.bold-white-btn {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%) !important;
+  color: #fff !important;
+  font-weight: 800 !important;
+  border: none;
+  text-decoration: none;
+}
+.bold-white-btn:hover, .bold-white-btn:focus {
+  background: linear-gradient(90deg, #764ba2 0%, #667eea 100%) !important;
+  color: #fff !important;
+  text-decoration: none;
+}
+.bold-white-text {
+  color: #fff !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+/* Modern Book Button for Home Service Card */
+.modern-book-btn {
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 1.08rem;
+  letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  color: #fff !important;
+  border: none;
+  border-radius: 28px;
+  padding: 0.7rem 1.2rem;
+  box-shadow: 0 4px 18px rgba(102,126,234,0.13);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+.modern-book-btn:hover, .modern-book-btn:focus {
+  background: linear-gradient(90deg, #764ba2 0%, #667eea 100%);
+  box-shadow: 0 8px 24px rgba(102,126,234,0.22);
+  transform: translateY(-2px) scale(1.04);
+  color: #fff !important;
+  text-decoration: none;
+}
 /* Đảm bảo ảnh dịch vụ fit khung card, không bị méo, không tràn */
 .service-image-wrapper {
   width: 100%;

@@ -105,13 +105,27 @@ const MyBlogs = () => {
               <Col lg="6" md="6" sm="12" className="mb-4" key={blog.id}>
                 <Card className="blog-item h-100">
                   <div className="blog-img">
-                    <img 
-                      src={blog.imageUrl || "https://via.placeholder.com/400x200/3498db/ffffff?text=Blog+Image"} 
-                      alt={blog.title}
-                      onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/400x200/3498db/ffffff?text=Blog+Image";
-                      }}
-                    />
+                    {(() => {
+                      let imageUrl = blog.imageUrl;
+                      // Nếu imageUrl chứa localhost:5000 thì thay bằng domain public
+                      if (imageUrl && imageUrl.includes('localhost:5000')) {
+                        imageUrl = imageUrl.replace('localhost:5000', 'bwpremier-sonaseaphuquoc.vn');
+                      }
+                      // Nếu imageUrl không phải http/https thì ghép BASE_URL vào trước
+                      if (imageUrl && !/^https?:\/\//i.test(imageUrl)) {
+                        const { BASE_URL } = require('../config');
+                        imageUrl = BASE_URL.replace(/\/api$/, '') + '/' + imageUrl.replace(/^\//, '');
+                      }
+                      return (
+                        <img
+                          src={imageUrl || "https://via.placeholder.com/400x200/3498db/ffffff?text=Blog+Image"}
+                          alt={blog.title}
+                          onError={e => {
+                            e.target.src = "https://via.placeholder.com/400x200/3498db/ffffff?text=Blog+Image";
+                          }}
+                        />
+                      );
+                    })()}
                     <div className="blog-status">
                       <span className="badge bg-success">
                         Đã xuất bản

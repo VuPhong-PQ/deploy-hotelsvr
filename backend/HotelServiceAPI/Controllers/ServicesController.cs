@@ -28,6 +28,14 @@ namespace HotelServiceAPI.Controllers
             try
             {
                 var services = await _sqlServerService.GetAllServicesAsync();
+                var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                foreach (var s in services)
+                {
+                    if (!string.IsNullOrEmpty(s.ImageUrl) && !s.ImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                    {
+                        s.ImageUrl = baseUrl.TrimEnd('/') + "/" + s.ImageUrl.TrimStart('/');
+                    }
+                }
                 return Ok(services);
             }
             catch (Exception ex)
@@ -46,6 +54,11 @@ namespace HotelServiceAPI.Controllers
                 if (service == null)
                 {
                     return NotFound(new { message = "Service không tồn tại" });
+                }
+                var baseUrl = $"{Request.Scheme}://{Request.Host}";
+                if (!string.IsNullOrEmpty(service.ImageUrl) && !service.ImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                {
+                    service.ImageUrl = baseUrl.TrimEnd('/') + "/" + service.ImageUrl.TrimStart('/');
                 }
                 return Ok(service);
             }

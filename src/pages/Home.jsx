@@ -58,10 +58,68 @@ function ServiceCard({ service }) {
               <i className="ri-timer-flash-line"></i> {service.speed}
             </span>
           </div>
-          <Link to={`/services/${service.id}#booking-form`} className="w-50 services_item-btn services_btn-rent text-center d-inline-block">
+          <Link
+            to={`/services/${service.id}#booking-form`}
+            className="w-50 text-center d-inline-block"
+            style={{
+              background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
+              color: "#fff",
+              fontWeight: 800,
+              fontSize: "1.08rem",
+              border: "none",
+              borderRadius: "28px",
+              padding: "0.7rem 1.2rem",
+              boxShadow: "0 4px 18px rgba(102,126,234,0.13)",
+              marginRight: "0.5rem",
+              marginBottom: "0.5rem",
+              letterSpacing: "0.5px",
+              textDecoration: "none",
+              display: "inline-block",
+              transition: "background 0.3s, box-shadow 0.3s, transform 0.2s"
+            }}
+            onMouseOver={e => {
+              e.currentTarget.style.background = "linear-gradient(90deg, #764ba2 0%, #667eea 100%)";
+              e.currentTarget.style.boxShadow = "0 8px 24px rgba(102,126,234,0.22)";
+              e.currentTarget.style.transform = "translateY(-2px) scale(1.04)";
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.background = "linear-gradient(90deg, #667eea 0%, #764ba2 100%)";
+              e.currentTarget.style.boxShadow = "0 4px 18px rgba(102,126,234,0.13)";
+              e.currentTarget.style.transform = "none";
+            }}
+          >
             Đặt dịch vụ
           </Link>
-          <Link to={`/services/${service.id}`} className="w-50 services_item-btn services__btn-details text-center d-inline-block">
+          <Link
+            to={`/services/${service.id}`}
+            className="w-50 text-center d-inline-block"
+            style={{
+              background: "linear-gradient(90deg, #667eea 0%, #764ba2 100%)",
+              color: "#fff",
+              fontWeight: 800,
+              fontSize: "1.08rem",
+              border: "none",
+              borderRadius: "28px",
+              padding: "0.7rem 1.2rem",
+              boxShadow: "0 4px 18px rgba(102,126,234,0.13)",
+              marginRight: "0.5rem",
+              marginBottom: "0.5rem",
+              letterSpacing: "0.5px",
+              textDecoration: "none",
+              display: "inline-block",
+              transition: "background 0.3s, box-shadow 0.3s, transform 0.2s"
+            }}
+            onMouseOver={e => {
+              e.currentTarget.style.background = "linear-gradient(90deg, #764ba2 0%, #667eea 100%)";
+              e.currentTarget.style.boxShadow = "0 8px 24px rgba(102,126,234,0.22)";
+              e.currentTarget.style.transform = "translateY(-2px) scale(1.04)";
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.background = "linear-gradient(90deg, #667eea 0%, #764ba2 100%)";
+              e.currentTarget.style.boxShadow = "0 4px 18px rgba(102,126,234,0.13)";
+              e.currentTarget.style.transform = "none";
+            }}
+          >
             Xem chi tiết
           </Link>
         </div>

@@ -29,12 +29,17 @@ namespace HotelServiceAPI.Controllers
                 var blogs = await _blogRepository.GetAllBlogsAsync();
                 Console.WriteLine($"📊 Retrieved {blogs.Count()} blogs from repository");
                 
+                var baseUrl = "https://bwpremier-sonaseaphuquoc.vn";
                 var blogDtos = blogs.Select(b => new
                 {
                     b.Id,
                     b.Title,
                     b.Content,
-                    b.ImageUrl,
+                    ImageUrl = !string.IsNullOrEmpty(b.ImageUrl) && b.ImageUrl.StartsWith("http://localhost:5000", StringComparison.OrdinalIgnoreCase)
+                        ? b.ImageUrl.Replace("http://localhost:5000", baseUrl)
+                        : (!string.IsNullOrEmpty(b.ImageUrl) && !b.ImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                            ? baseUrl.TrimEnd('/') + "/uploads/images/" + b.ImageUrl.TrimStart('/')
+                            : b.ImageUrl),
                     b.Quote,
                     b.CreatedAt,
                     b.UpdatedAt,
@@ -140,12 +145,17 @@ namespace HotelServiceAPI.Controllers
                     return NotFound();
                 }
                 
+                var baseUrl = "https://bwpremier-sonaseaphuquoc.vn";
                 var blogDto = new
                 {
                     blog.Id,
                     blog.Title,
                     blog.Content,
-                    blog.ImageUrl,
+                    ImageUrl = !string.IsNullOrEmpty(blog.ImageUrl) && blog.ImageUrl.StartsWith("http://localhost:5000", StringComparison.OrdinalIgnoreCase)
+                        ? blog.ImageUrl.Replace("http://localhost:5000", baseUrl)
+                        : (!string.IsNullOrEmpty(blog.ImageUrl) && !blog.ImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                            ? baseUrl.TrimEnd('/') + "/uploads/images/" + blog.ImageUrl.TrimStart('/')
+                            : blog.ImageUrl),
                     blog.Quote,
                     blog.CreatedAt,
                     blog.UpdatedAt,
@@ -176,12 +186,17 @@ namespace HotelServiceAPI.Controllers
                 
                 var blogs = await _blogRepository.GetBlogsByAuthorIdAsync(userId);
                 
+                var baseUrl = "https://bwpremier-sonaseaphuquoc.vn";
                 var blogDtos = blogs.Select(b => new
                 {
                     b.Id,
                     b.Title,
                     b.Content,
-                    b.ImageUrl,
+                    ImageUrl = !string.IsNullOrEmpty(b.ImageUrl) && b.ImageUrl.StartsWith("http://localhost:5000", StringComparison.OrdinalIgnoreCase)
+                        ? b.ImageUrl.Replace("http://localhost:5000", baseUrl)
+                        : (!string.IsNullOrEmpty(b.ImageUrl) && !b.ImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                            ? baseUrl.TrimEnd('/') + "/uploads/images/" + b.ImageUrl.TrimStart('/')
+                            : b.ImageUrl),
                     b.Quote,
                     b.CreatedAt,
                     b.UpdatedAt,
@@ -217,12 +232,17 @@ namespace HotelServiceAPI.Controllers
                 
                 var blogs = await _blogRepository.GetBlogsByAuthorIdAsync(authorId);
                 
+                var baseUrl = "https://bwpremier-sonaseaphuquoc.vn";
                 var blogDtos = blogs.Select(b => new
                 {
                     b.Id,
                     b.Title,
                     b.Content,
-                    b.ImageUrl,
+                    ImageUrl = !string.IsNullOrEmpty(b.ImageUrl) && b.ImageUrl.StartsWith("http://localhost:5000", StringComparison.OrdinalIgnoreCase)
+                        ? b.ImageUrl.Replace("http://localhost:5000", baseUrl)
+                        : (!string.IsNullOrEmpty(b.ImageUrl) && !b.ImageUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                            ? baseUrl.TrimEnd('/') + "/uploads/images/" + b.ImageUrl.TrimStart('/')
+                            : b.ImageUrl),
                     b.Quote,
                     b.CreatedAt,
                     b.UpdatedAt,
